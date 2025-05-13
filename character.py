@@ -1,7 +1,8 @@
+#imports
 from health_bar import HealthBar
-from weapon import fists
+from weapon import fists, claws, jaws, iron_sword, short_bow
 
-
+#parent class setup
 class Character:
   def __init__(self, name: str, health: int):
     self.name = name
@@ -15,7 +16,9 @@ class Character:
     target.health = max(target.health, 0)
     target.health_bar.update()
     print(f"{self.name} dealt {self.weapon.damage} damage to {target.name} with {self.weapon.name}")
-    
+
+
+#subclass setup 
 class Hero(Character):
   def __init__(self, name: str, health: int) -> None:
     super().__init__(name=name, health=health)
@@ -32,10 +35,19 @@ class Hero(Character):
     print(f"{self.name} dropped the {self.weapon.name}")
 
 
-
+#subclass setup
 class Enemy(Character):
   def __init__(self, name: str, health: int, weapon,) -> None:
     super().__init__(name=name, health=health)
     self.weapon = weapon
 
     self.health_bar = HealthBar(self, color="red")
+
+    enemies.append(self)
+
+enemies = []
+rat = Enemy("Rat", 12, claws)
+slime = Enemy("Slime", 20, jaws)
+wolf = Enemy("Wolf", 30, jaws)
+goblin = Enemy("Goblin", 40, short_bow)
+ork = Enemy("Ork", 60, iron_sword)
