@@ -13,8 +13,12 @@ enemy = Enemy(name="enemy", health=100, weapon=short_bow)
 class Game:
   def __init__(self):
     self.running = True
+    
+  @staticmethod  
+  def clear():
+    os.system("cls")
 
-  @staticmethod
+  @staticmethod 
   def spawn_enemy() -> Enemy:
     if enemies:
       enemy = enemies[0]
@@ -27,7 +31,7 @@ class Game:
   def run(self):
     enemy = self.spawn_enemy()
     while self.running:
-      os.system("cls")
+      Game.clear()
 
       hero.attack(enemy)
       enemy.attack(hero)
@@ -48,4 +52,4 @@ class Game:
 # game loop
 if __name__ == "__main__":
   game = Game()
-  game.run
+  game.run()
