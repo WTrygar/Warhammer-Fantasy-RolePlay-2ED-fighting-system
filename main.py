@@ -5,9 +5,9 @@ from character import Enemy, Hero, enemies
 from weapon import iron_sword, short_bow
 
 # setup
-hero = Hero(name="Hero", health=100)
+hero = Hero(name="Hero", health=200)
 hero.equip(iron_sword)
-enemy = Enemy(name="enemy", health=100, weapon=short_bow)
+# enemy = Enemy(name="enemy", health=100, weapon=short_bow)
 
 # game class
 class Game:
@@ -20,6 +20,7 @@ class Game:
 
   @staticmethod 
   def spawn_enemy() -> Enemy:
+    Game.clear
     if enemies:
       enemy = enemies[0]
       input(f"Spawning {enemy.name}... ")
@@ -41,9 +42,9 @@ class Game:
 
       input()
 
-      self.running = hero.health > 0
+      self.running = hero.alive
 
-      if enemy.health <= 0:
+      if not enemy.alive:
         enemies.pop(0)
         enemy = self.spawn_enemy()
     input("GAME OVER")
