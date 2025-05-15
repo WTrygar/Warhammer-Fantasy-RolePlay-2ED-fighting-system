@@ -1,0 +1,1 @@
+#here will be a list of spells (functions or objects) that characters with Magic > 0 could use

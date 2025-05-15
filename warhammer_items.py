@@ -1,0 +1,1 @@
+# here will be a list of items that characters can have in their inventory that are not weapons
