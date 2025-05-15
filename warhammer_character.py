@@ -75,6 +75,21 @@ class Character(ABC):
   def roll_event(stat_chance: int) -> bool:
     rolled_event = randint(1, 100)
     return rolled_event <= stat_chance
+  
+  def attack(self, target) -> None:
+    if not self.alive:
+      print(f"{self.name} has fallen in battle...")
+      return
+    
+    dmg = self.picked_weapon.damage
+
+    target.get_damaged(dmg, self)
+    
+  def get_damaged(self, dmg: int, attacker) -> None:
+    self.health -= dmg
+    self.health = max(self.health, 0)
+    self.health_bar.update()
+    print(f"{attacker.name} dealt {dmg} damage to {self.name} with {attacker.picked_weapon.name}")
 
 
 class PlayerCharacter(Character):
@@ -109,7 +124,8 @@ class PlayerCharacter(Character):
     self.picked_weapon = weapons[0]
     self.health_bar = HealthBar(self, color="green")
 
-    enemies.append(self)
+  
+    
 
 
 class EnemyCharacter(Character):
@@ -143,6 +159,8 @@ class EnemyCharacter(Character):
 
     self.picked_weapon = weapons[0]
     self.health_bar = HealthBar(self, color="red")
+
+    enemies.append(self)
 
 #  IDEAS FOR RACES AND CAREERS ADDING BONUS STATS AND DATA TO CHARACTERS
 
