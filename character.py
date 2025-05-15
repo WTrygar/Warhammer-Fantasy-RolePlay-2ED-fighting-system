@@ -9,7 +9,7 @@ from weapon import claws, fists, iron_sword, jaws, short_bow
 #parent class setup
 class Character(ABC): #ABC prevents using this class, we are using only children
   health_bar: HealthBar
-  counter_chance: int = 20
+  # counter_chance: int = 20
   def __init__(self, name: str, health: int, eva_ch: int, crit_ch: int, armor: int) -> None:
     self.name = name
     self.health = health
@@ -49,9 +49,9 @@ class Character(ABC): #ABC prevents using this class, we are using only children
     target.get_damaged(final_dmg, self)
 
     #roll for counter
-    if not is_counter and target.alive and target.roll_event(target.counter_chance):
-      print(f"{target.name} initiated counter-attack!")
-      target.attack(self, is_counter=True)
+    # if not is_counter and target.alive and target.roll_event(target.counter_chance):
+    #   print(f"{target.name} initiated counter-attack!")
+    #   target.attack(self, is_counter=True)
 
   # def evade(self) -> bool:
   #   rolled_evade = randint(1, 100)
@@ -101,8 +101,18 @@ class Hero(Character):
 
 #subclass setup
 class Enemy(Character):
-  def __init__(self, name: str, health: int, eva_ch: int, crit_ch: int, armor: int, weapon) -> None:
-    super().__init__(name=name, health=health, eva_ch=eva_ch, crit_ch=crit_ch, armor=armor)
+  def __init__(self,
+               name: str,
+               health: int,
+               eva_ch: int,
+               crit_ch: int,
+               armor: int,
+               weapon) -> None:
+    super().__init__(name=name,
+                     health=health,
+                     eva_ch=eva_ch,
+                     crit_ch=crit_ch,
+                     armor=armor)
     self.weapon = weapon
 
     self.health_bar = HealthBar(self, color="red")
