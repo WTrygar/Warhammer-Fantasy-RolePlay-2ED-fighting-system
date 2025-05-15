@@ -1,6 +1,5 @@
-from warhammer_character import Character, PlayerCharacter
+from warhammer_character import Character, EnemyCharacter, PlayerCharacter
 from warhammer_weapons import MeleeWeapon, MissileWeapon, Weapon, fists
-
 
 helmut = PlayerCharacter(name = "Helmut",
                          race = "Human",
@@ -25,6 +24,29 @@ helmut = PlayerCharacter(name = "Helmut",
                          spells = ())
 
 
+archaon = EnemyCharacter(name = "Archaon the Everchosen",
+                         race = "Mutant",
+                         career = "Everchosen",
+                         weapon_skill = 70,
+                         ballistic_skill = 30,
+                         strength = 60,
+                         toughness = 60,
+                         agility = 40,
+                         intelligence = 60,
+                         will_power = 70,
+                         fellowship = 50,
+                         attacks = 2,
+                         health_max = 50,
+                         health = 50,
+                         movement = 4,
+                         magic = 3,
+                         insanity_points = 10,
+                         fate_points = 3,
+                         weapons = [fists],
+                         items = [],
+                         spells = ())
+enemies = []
+
 if __name__ == "__main__":
   print(f"Name: {helmut.name}")
   print(f"Race: {helmut.race}")
@@ -45,3 +67,25 @@ if __name__ == "__main__":
   print(f"Magic (Mag): {helmut.magic}")  
   print(f"Insanity Points (IP): {helmut.insanity_points}")
   print(f"Fate Points (FP): {helmut.fate_points}")
+  print(f" ")
+  print(f"Name: {archaon.name}")
+  print(f"Race: {archaon.race}")
+  print(f"Career: {archaon.career}")
+  print(f"Weapon Skills (WS): {archaon.weapon_skills}")
+  print(f"Ballistic Skills (BS): {archaon.ballistic_skills}")
+  print(f"Strength (S): {archaon.strength}")
+  print(f"Toughness (T): {archaon.toughness}")
+  print(f"Agility (Ag): {archaon.agility}")
+  print(f"Intelligence (Int): {archaon.intelligence}")
+  print(f"Willpower (WP): {archaon.will_power}")
+  print(f"Fellowship (Fel): {archaon.fellowship}")
+  print(f"Attacks (A): {archaon.attacks}")
+  print(f"Maximum health (Wounds - W): {archaon.health_max} and current: {archaon.health}")
+  print(f"Strength Bonus (SB): {archaon.strength_bonus} (SB == S // 10)")
+  print(f"Toughness Bonus (TB): {archaon.toughness_bonus} (TB == T // 10)")
+  print(f"Movement (M): {archaon.movement}")
+  print(f"Magic (Mag): {archaon.magic}")  
+  print(f"Insanity Points (IP): {archaon.insanity_points}")
+  print(f"Fate Points (FP): {archaon.fate_points}")
+
+  print(enemies)

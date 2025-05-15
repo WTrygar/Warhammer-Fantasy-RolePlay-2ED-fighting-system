@@ -1,9 +1,11 @@
 #imports
 from abc import ABC
 from random import randint
-from health_bar import HealthBar
-from basics.weapon import claws, fists, iron_sword, jaws, short_bow
 
+from health_bar import HealthBar
+from warhammer_weapons import fists, hochlandLongRifle
+
+enemies = []
 
 class Character(ABC):
   health_bar: HealthBar
@@ -38,7 +40,7 @@ class Character(ABC):
                #bonus stats
                weapons: list,
                items: list,
-               spells: list,
+               spells: set,
 
                ) -> None:
     self.name = name
@@ -107,8 +109,40 @@ class PlayerCharacter(Character):
     self.picked_weapon = weapons[0]
     self.health_bar = HealthBar(self, color="green")
 
-    def switch_weapon() -> None:
-      ...
+    enemies.append(self)
+
+
+class EnemyCharacter(Character):
+  def __init__(self, name, race, career, weapon_skill, ballistic_skill, strength, toughness, agility, intelligence, will_power, fellowship, attacks, health_max, health, movement, magic, insanity_points, fate_points, weapons, items, spells):
+    super().__init__(name = name,
+                     race = race,
+                     career = career,
+                     weapon_skill = weapon_skill,
+                     ballistic_skill = ballistic_skill,
+                     strength = strength,
+                     toughness = toughness,
+                     agility = agility,
+                     intelligence = intelligence,
+                     will_power = will_power,
+                     fellowship = fellowship,
+                     attacks = 1,
+                     health_max = health_max,
+                     health = health,
+                     strength_bonus = 0,
+                     toughness_bonus = 0,
+                     movement = movement,
+                     magic = 0,
+                     insanity_points = insanity_points,
+                     fate_points = fate_points,
+                     weapons = [],
+                     items = [],
+                     spells = ())
+    
+    self.strength_bonus = strength // 10
+    self.toughness_bonus = toughness // 10
+
+    self.picked_weapon = weapons[0]
+    self.health_bar = HealthBar(self, color="red")
 
 #  IDEAS FOR RACES AND CAREERS ADDING BONUS STATS AND DATA TO CHARACTERS
 
