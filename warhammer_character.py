@@ -2,7 +2,7 @@
 from abc import ABC
 from random import randint
 from health_bar import HealthBar
-from weapon import claws, fists, iron_sword, jaws, short_bow
+from basics.weapon import claws, fists, iron_sword, jaws, short_bow
 
 
 class Character(ABC):
