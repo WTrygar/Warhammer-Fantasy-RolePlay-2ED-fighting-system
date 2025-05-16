@@ -1,6 +1,8 @@
-from warhammer_character import Character, EnemyCharacter, PlayerCharacter
-from warhammer_weapons import MeleeWeapon, MissileWeapon, Weapon, fists
+from warhammer_character import (EnemyCharacter, PlayerCharacter, enemies,
+                                 playable_characters)
+from warhammer_weapons import fists, hochlandLongRifle
 
+# ----- PLAYABLE CHARACTERS -----
 helmut = PlayerCharacter(name = "Helmut",
                          race = "Human",
                          career = "Bone Picker",
@@ -19,11 +21,16 @@ helmut = PlayerCharacter(name = "Helmut",
                          magic = 0,
                          insanity_points = 0,
                          fate_points = 2,
-                         weapons = [fists],
+                         weapons = [fists, hochlandLongRifle],
                          items = [],
                          spells = ())
 
+snorri = PlayerCharacter(name = "Snorri",
+                         race = "Dwarf",
+                         career = "Engineer",
+                         )
 
+# ----- ENEMY CHARACTERS -----
 archaon = EnemyCharacter(name = "Archaon the Everchosen",
                          race = "Mutant",
                          career = "Everchosen",
@@ -45,8 +52,9 @@ archaon = EnemyCharacter(name = "Archaon the Everchosen",
                          weapons = [fists],
                          items = [],
                          spells = ())
-enemies = []
 
+
+# ----- TESTING -----
 if __name__ == "__main__":
   print(f"Name: {helmut.name}")
   print(f"Race: {helmut.race}")
@@ -67,6 +75,8 @@ if __name__ == "__main__":
   print(f"Magic (Mag): {helmut.magic}")  
   print(f"Insanity Points (IP): {helmut.insanity_points}")
   print(f"Fate Points (FP): {helmut.fate_points}")
+  print(f"Weapons: {helmut.weapons}")
+  print(f"Currently picked weapon: {helmut.picked_weapon}")
   print(f" ")
   print(f"Name: {archaon.name}")
   print(f"Race: {archaon.race}")
@@ -87,5 +97,28 @@ if __name__ == "__main__":
   print(f"Magic (Mag): {archaon.magic}")  
   print(f"Insanity Points (IP): {archaon.insanity_points}")
   print(f"Fate Points (FP): {archaon.fate_points}")
-
-  print(enemies)
+  print(f" ")
+  print(f"List of enemies: {enemies}")
+  print(f"List of playable characters: {playable_characters}")
+  print(f" ")
+  print(f"Name: {snorri.name}")
+  print(f"Race: {snorri.race}")
+  print(f"Career: {snorri.career}")
+  print(f"Weapon Skills (WS): {snorri.weapon_skills}")
+  print(f"Ballistic Skills (BS): {snorri.ballistic_skills}")
+  print(f"Strength (S): {snorri.strength}")
+  print(f"Toughness (T): {snorri.toughness}")
+  print(f"Agility (Ag): {snorri.agility}")
+  print(f"Intelligence (Int): {snorri.intelligence}")
+  print(f"Willpower (WP): {snorri.will_power}")
+  print(f"Fellowship (Fel): {snorri.fellowship}")
+  print(f"Attacks (A): {snorri.attacks}")
+  print(f"Maximum health (Wounds - W): {snorri.health_max} and current: {snorri.health}")
+  print(f"Strength Bonus (SB): {snorri.strength_bonus} (SB == S // 10)")
+  print(f"Toughness Bonus (TB): {snorri.toughness_bonus} (TB == T // 10)")
+  print(f"Movement (M): {snorri.movement}")
+  print(f"Magic (Mag): {snorri.magic}")  
+  print(f"Insanity Points (IP): {snorri.insanity_points}")
+  print(f"Fate Points (FP): {snorri.fate_points}")
+  print(f"Weapons: {snorri.weapons}")
+  print(f"Currently picked weapon: {snorri.picked_weapon}")

@@ -1,3 +1,6 @@
+meele_weapons: list = []
+missile_weapons: list = []
+
 class Weapon:
   def __init__(self,
                name: str,
@@ -15,12 +18,14 @@ class Weapon:
     self.qualities = qualities
     self.availability = availability
     
-  def __str__(self):
+  def __repr__(self):
     return f'{self.name}'
 
 class MeleeWeapon(Weapon):
   def __init__(self, name, cost, encumbrance, group, damage, qualities, availability):
     super().__init__(name, cost, encumbrance, group, damage, qualities, availability)
+
+    meele_weapons.append(self)
 
 
 class MissileWeapon(Weapon):
@@ -28,6 +33,8 @@ class MissileWeapon(Weapon):
     super().__init__(name, cost, encumbrance, group, damage, qualities, availability)
     self.range = range
     self.reload = reload
+
+    missile_weapons.append(self)
 
 
 fists = MeleeWeapon(name = "Fists",
@@ -67,3 +74,6 @@ if __name__ == "__main__":
   print(f"Reload: {hochlandLongRifle.reload}")
   print(f"Qualities: {hochlandLongRifle.qualities}")
   print(f"Availability: {hochlandLongRifle.availability}")
+  print(f" ")
+  print(meele_weapons)
+  print(missile_weapons)

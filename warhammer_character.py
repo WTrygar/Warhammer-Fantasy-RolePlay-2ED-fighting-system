@@ -6,10 +6,11 @@ from health_bar import HealthBar
 from warhammer_weapons import fists, hochlandLongRifle
 
 enemies = []
+playable_characters = []
 
+# ----- Parent Class -----
 class Character(ABC):
   health_bar: HealthBar
-  
   def __init__(self,
                #name, race and class of character
                name: str,
@@ -17,52 +18,52 @@ class Character(ABC):
                career: str,
 
                #main profile
-               weapon_skill: int,
-               ballistic_skill: int,
-               strength: int,
-               toughness: int,
-               agility: int,
-               intelligence: int,
-               will_power: int,
-               fellowship: int,
+               weapon_skill: int = None,
+               ballistic_skill: int = None,
+               strength: int = None,
+               toughness: int = None,
+               agility: int = None,
+               intelligence: int = None,
+               will_power: int = None,
+               fellowship: int = None,
 
                #secondary profile
-               attacks: int,
-               health_max: int,
-               health: int,
-               strength_bonus: int,
-               toughness_bonus: int,
-               movement: int,
-               magic: int,
-               insanity_points: int,
-               fate_points: int,
+               attacks: int = None,
+               health_max: int = None,
+               health: int = None,
+               strength_bonus: int = None,
+               toughness_bonus: int = None,
+               movement: int = None,
+               magic: int = None,
+               insanity_points: int = None,
+               fate_points: int = None,
 
                #bonus stats
-               weapons: list,
-               items: list,
-               spells: set,
+               weapons: list = [],
+               items: list = [],
+               spells: set = (),
 
                ) -> None:
     self.name = name
     self.race = race
     self.career = career
-    self.weapon_skills = weapon_skill
-    self.ballistic_skills = ballistic_skill
-    self.strength = strength
-    self.toughness = toughness
-    self.agility = agility
-    self.intelligence = intelligence
-    self.will_power = will_power
-    self.fellowship = fellowship
-    self.attacks = attacks
-    self.health_max = health_max
-    self.health = health
+    self.weapon_skills = weapon_skill if weapon_skill is not None else randint(2, 20)
+    self.ballistic_skills = ballistic_skill if ballistic_skill is not None else randint(2, 20)
+    self.strength = strength if strength is not None else randint(2, 20)
+    self.toughness = toughness if toughness is not None else randint(2, 20)
+    self.agility = agility if agility is not None else randint(2, 20)
+    self.intelligence = intelligence if intelligence is not None else randint(2, 20)
+    self.will_power = will_power if will_power is not None else randint(2, 20)
+    self.fellowship = fellowship if fellowship is not None else randint(2, 20)
+    self.attacks = attacks if attacks is not None else 1
+    self.health_max = health_max if health_max is not None else 1
+    self.health = health if health is not None else 1
     self.strength_bonus = strength_bonus
     self.toughness_bonus = toughness_bonus
-    self.movement = movement
-    self.magic = magic
-    self.insanity_points = insanity_points
-    self.fate_points = fate_points
+    self.movement = movement if movement is not None else 1
+    self.magic = magic if magic is not None else 0
+    self.insanity_points = insanity_points if insanity_points is not None else 0
+    self.fate_points = fate_points if fate_points is not None else 0
     self.weapons = weapons
     self.items = items
     self.spells = spells
@@ -75,6 +76,9 @@ class Character(ABC):
   def roll_event(stat_chance: int) -> bool:
     rolled_event = randint(1, 100)
     return rolled_event <= stat_chance
+  
+  def __repr__(self):
+    return f'{self.name}'
   
   def attack(self, target) -> None:
     if not self.alive:
@@ -91,7 +95,7 @@ class Character(ABC):
     self.health_bar.update()
     print(f"{attacker.name} dealt {dmg} damage to {self.name} with {attacker.picked_weapon.name}")
 
-
+# ----- First Child Class -----
 class PlayerCharacter(Character):
   def __init__(self, name, race, career, weapon_skill, ballistic_skill, strength, toughness, agility, intelligence, will_power, fellowship, attacks, health_max, health, movement, magic, insanity_points, fate_points, weapons, items, spells):
     super().__init__(name = name,
@@ -105,18 +109,18 @@ class PlayerCharacter(Character):
                      intelligence = intelligence,
                      will_power = will_power,
                      fellowship = fellowship,
-                     attacks = 1,
+                     attacks = attacks,
                      health_max = health_max,
                      health = health,
                      strength_bonus = 0,
                      toughness_bonus = 0,
                      movement = movement,
-                     magic = 0,
-                     insanity_points = 0,
-                     fate_points = 0,
-                     weapons = [],
-                     items = [],
-                     spells = [])
+                     magic = magic,
+                     insanity_points = insanity_points,
+                     fate_points = fate_points,
+                     weapons = weapons,
+                     items = items,
+                     spells = spells)
     
     self.strength_bonus = strength // 10
     self.toughness_bonus = toughness // 10
@@ -124,10 +128,9 @@ class PlayerCharacter(Character):
     self.picked_weapon = weapons[0]
     self.health_bar = HealthBar(self, color="green")
 
-  
-    
+    playable_characters.append(self)
 
-
+# -----Second Child Class-----
 class EnemyCharacter(Character):
   def __init__(self, name, race, career, weapon_skill, ballistic_skill, strength, toughness, agility, intelligence, will_power, fellowship, attacks, health_max, health, movement, magic, insanity_points, fate_points, weapons, items, spells):
     super().__init__(name = name,
@@ -141,18 +144,18 @@ class EnemyCharacter(Character):
                      intelligence = intelligence,
                      will_power = will_power,
                      fellowship = fellowship,
-                     attacks = 1,
+                     attacks = attacks,
                      health_max = health_max,
                      health = health,
                      strength_bonus = 0,
                      toughness_bonus = 0,
                      movement = movement,
-                     magic = 0,
+                     magic = magic,
                      insanity_points = insanity_points,
                      fate_points = fate_points,
-                     weapons = [],
-                     items = [],
-                     spells = ())
+                     weapons = weapons,
+                     items = items,
+                     spells = spells)
     
     self.strength_bonus = strength // 10
     self.toughness_bonus = toughness // 10
