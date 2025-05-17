@@ -3,7 +3,7 @@ from warhammer_character import (EnemyCharacter, PlayerCharacter, enemies,
 from warhammer_weapons import fists, hochlandLongRifle
 
 # ----- PLAYABLE CHARACTERS -----
-helmut = PlayerCharacter(name = "Helmut",
+helmut: PlayerCharacter = PlayerCharacter(name = "Helmut",
                          race = "Human",
                          career = "Bone Picker",
                          weapon_skill = 30,
@@ -28,7 +28,7 @@ helmut = PlayerCharacter(name = "Helmut",
 
 
 # ----- ENEMY CHARACTERS -----
-archaon = EnemyCharacter(name = "Archaon the Everchosen",
+archaon: EnemyCharacter = EnemyCharacter(name = "Archaon the Everchosen",
                          race = "Mutant",
                          career = "Everchosen",
                          weapon_skill = 70,

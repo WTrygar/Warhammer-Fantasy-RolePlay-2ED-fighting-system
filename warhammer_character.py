@@ -97,7 +97,7 @@ class Character(ABC):
 
 # ----- First Child Class -----
 class PlayerCharacter(Character):
-  def __init__(self, name, race, career, weapon_skill, ballistic_skill, strength, toughness, agility, intelligence, will_power, fellowship, attacks, health_max, health, movement, magic, insanity_points, fate_points, weapons, items, spells):
+  def __init__(self, name, race, career, weapon_skill, ballistic_skill, strength, toughness, agility, intelligence, will_power, fellowship, attacks, health_max, health, movement, magic, insanity_points, fate_points, weapons, items, spells) -> None:
     super().__init__(name = name,
                      race = race,
                      career = career,
@@ -132,7 +132,7 @@ class PlayerCharacter(Character):
 
 # -----Second Child Class-----
 class EnemyCharacter(Character):
-  def __init__(self, name, race, career, weapon_skill, ballistic_skill, strength, toughness, agility, intelligence, will_power, fellowship, attacks, health_max, health, movement, magic, insanity_points, fate_points, weapons, items, spells):
+  def __init__(self, name, race, career, weapon_skill, ballistic_skill, strength, toughness, agility, intelligence, will_power, fellowship, attacks, health_max, health, movement, magic, insanity_points, fate_points, weapons, items, spells) -> None:
     super().__init__(name = name,
                      race = race,
                      career = career,
@@ -164,35 +164,3 @@ class EnemyCharacter(Character):
     self.health_bar = HealthBar(self, color="red")
 
     enemies.append(self)
-
-#  IDEAS FOR RACES AND CAREERS ADDING BONUS STATS AND DATA TO CHARACTERS
-
-# bonus_stat_dict = {
-#   "elf" : {
-#     "strght": 0,
-#     "dex": 5,
-#     "hp": 2
-#   },
-#   "orc":  {
-#     "strght": 4,
-#     "dex": 0,
-#     "hp": 3
-#   },
-#   "knight": {
-#     "strght": 4,
-#     "dex": 0,
-#     "hp": 3
-#   },
-#   "ranger":  {
-#     "strght": 0,
-#     "dex": 5,
-#     "hp": 2
-#   }
-# }
-
-
-# class BonusStats():
-#   strght: int
-#   dex: int
-#   hp: int
-#   def __init__(self, stat_dict: dict):
