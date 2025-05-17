@@ -9,10 +9,20 @@ actions = [
     inquirer.List(
         "action",
         message="What do You want to do?",
-        choices=["attack", "switch weapon", "use item", "check_other"],
+        choices=["attack", "switch weapon", "use item", "check_character"],
     ),
 ]
 
 answers = inquirer.prompt(actions)
+term = answers['action']
+match term:
+  case "attack":
+    print(f"We have attacked!")
+  case "switch weapon":
+    print(f"We have switched our weapon!")
+  case "use item":
+    print(f"pick item that You want to use!")
+  case "check_character":
+    print(f"choose a character that You want to check!")
 
 pprint(answers)
