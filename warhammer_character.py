@@ -68,6 +68,9 @@ class Character(ABC):
     self.items = items
     self.spells = spells
   
+  def __repr__(self):
+    return f'{self.name}'
+  
   @property
   def alive(self) -> bool:
     return self.health > 0
@@ -77,10 +80,24 @@ class Character(ABC):
     rolled_event = randint(1, 100)
     return rolled_event <= stat_chance
   
-  def __repr__(self):
-    return f'{self.name}'
+  # ----- BASIC ACTIONS -----
   
-  def attack(self, target) -> None:
+  def aim(self, target) -> None:
+    ... #The character takes extra time to set up a melee or missile attack, thus increasing the chance to hit. If the character's following action is a standard attack, he gains a +10 bonus to weapon_skill (for melee attacks) or ballistic_skill (for ranged attacks).
+  
+  def cast(self, spell, *targets) -> None:
+    ... #the character unleashes a magic spell. If the character spends an extra half action, the casting roll can be augmented with a channelling skill test. Casting can be an extended action. You cannot cast more than one spell per round.
+
+  def charge_attack(self, target) -> None:
+    ... #the character rushes up to an opponent and delivers a single attack. The opponent must be at least 2 squares away from the character but within the character's charge move. Last 2 squares of the charge must be in a straight lin, so the charger can build up speed and line up with the target. The charging character gains a 10+ weapon_skill bonus.
+
+  def switch_weapon(self) -> None:
+    ... #character can switch a weapon for the other in his weapon list. If not stated, it takes half an action -> time of action == 1
+
+  def use_item(self) -> None:
+    ... #character uses an item from it's inventory, takes atleast half an action -> time of action >= 1
+
+  def standard_attack(self, target) -> None:
     if not self.alive:
       print(f"{self.name} has fallen in battle...")
       return
@@ -89,6 +106,31 @@ class Character(ABC):
 
     target.get_damaged(dmg, self)
     
+  def swift_attack(self, target) -> None:
+    ... #The character can make a number of melee or ranged attacks equal to his attacks characteristic. The character must have attacks >= 2 or better to take advantage of this action. If making a missile attack, a character can only use this action if the weapon can be reloaded as a free action or if the chararcter has a loaded pistol weapon in each hand. In the latter case, the character can make a maximum of 2 attacks (one per weapon)
+
+  # ----- ADVANCED ACTIONS -----
+
+  def all_out_attack(self, target) -> None:
+    ... #the character makes a furious melee attack, exposing himself to danger in order to land a forceful blow. The character's melee attack gains a 20+ weapon_skill bonus. However, until next turn, the character cannot parry or dodge.
+
+  def defensive_stance(self) -> None:
+    ... #the character strikes no blows this round, preferring instead to concentrate on self-defence. Until his next turn all melee attacks against the character suffer a -20 weapon_skill penalty.
+
+  def delay(self) -> None:
+    ... #the character waits and watches for an opportunity. When the delay action is used the character's turn ends immediately, but a half action is reserved for later use. Any time before his next turn, the character can take his half action. If two conflicting characters are both trying to use a delayed action simultaneously, make an opposed agility test to see who acts first. If the prepared action is not taken before the character's next turn, it is lost.
+
+  def feint(self, target) -> None:
+    ... #the character pretends to attack in one direction, deceiving his opponent and throwing off his defence. This is resolved as an opposed weapon_skill test. If the character wins, his next attack cannot be either dodged or parried. If the character's next action is anything other than a standard attack, this bonus is lost.
+
+  def guarded_attack(self, target) -> None:
+    ... #the character attacks carefully, making sure he is well defended from counter blows. He makes a melee attack with a -10 weapon_skill penalty. Until his next turn, the character gains a +10 bonus on any attempted parries and dodges.
+
+  def parrying_stance(self) -> None:
+    ... #the character readies to parry an incoming blow. Any time before his next turn, the character can try to parry one successful melee attack agains him as long as he is aware of the attack. Parrying stance ends at the start of his next turn, regardless of whether he parried a blow. Should a character have a weapon in their left hand. (this included shields and bucklers) he may parry once per round as a free action.
+    
+    
+  # ----- HELPER FUNCTIONS ----- 
   def get_damaged(self, dmg: int, attacker) -> None:
     self.health -= dmg
     self.health = max(self.health, 0)

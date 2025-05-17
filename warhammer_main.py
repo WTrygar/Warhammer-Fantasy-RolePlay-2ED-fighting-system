@@ -33,8 +33,8 @@ class Game:
     while self.running:
       Game.clear()
 
-      hero.attack(enemy)
-      enemy.attack(hero)
+      hero.standard_attack(enemy)
+      enemy.standard_attack(hero)
 
       hero.health_bar.draw()
       enemy.health_bar.draw()
