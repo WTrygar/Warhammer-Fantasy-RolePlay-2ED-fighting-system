@@ -7,6 +7,7 @@ from warhammer_weapons import fists, hochlandLongRifle
 
 enemies = []
 playable_characters = []
+all_characters = []
 
 # ----- Parent Class -----
 class Character(ABC):
@@ -67,6 +68,8 @@ class Character(ABC):
     self.weapons = weapons
     self.items = items
     self.spells = spells
+
+    all_characters.append(self)
   
   def __repr__(self):
     return f'{self.name}'

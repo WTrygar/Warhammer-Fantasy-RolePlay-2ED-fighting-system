@@ -1,5 +1,5 @@
-from warhammer_character import (EnemyCharacter, PlayerCharacter, enemies,
-                                 playable_characters)
+from warhammer_character import (EnemyCharacter, PlayerCharacter,
+                                 all_characters, enemies, playable_characters)
 from warhammer_weapons import fists, hochlandLongRifle
 
 # ----- PLAYABLE CHARACTERS -----
@@ -95,5 +95,7 @@ if __name__ == "__main__":
   print(f"Insanity Points (IP): {archaon.insanity_points}")
   print(f"Fate Points (FP): {archaon.fate_points}")
   print(f" ")
+  print(f"List of all characters: {all_characters}")
   print(f"List of enemies: {enemies}")
   print(f"List of playable characters: {playable_characters}")
+  
