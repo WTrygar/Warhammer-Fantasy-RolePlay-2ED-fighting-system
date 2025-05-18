@@ -9,7 +9,8 @@ class Weapon:
                group: str,
                damage: int,
                qualities: list,
-               availability: str):
+               availability: str,
+               two_handed: bool):
     self.name = name
     self.cost = cost
     self.encumbrance = encumbrance
@@ -17,34 +18,83 @@ class Weapon:
     self.damage = damage
     self.qualities = qualities
     self.availability = availability
+    self.two_handed = two_handed
     
   def __repr__(self):
     return f'{self.name}'
 
 class MeleeWeapon(Weapon):
-  def __init__(self, name, cost, encumbrance, group, damage, qualities, availability):
-    super().__init__(name, cost, encumbrance, group, damage, qualities, availability)
+  def __init__(self, name, cost, encumbrance, group, damage, qualities, availability, two_handed):
+    super().__init__(name, cost, encumbrance, group, damage, qualities, availability, two_handed)
 
     meele_weapons.append(self)
 
 
 class MissileWeapon(Weapon):
-  def __init__(self, name, cost, encumbrance, group, damage, qualities, availability, range: list, reload: int):
-    super().__init__(name, cost, encumbrance, group, damage, qualities, availability)
+  def __init__(self, name, cost, encumbrance, group, damage, qualities, availability, two_handed, range: list, reload: int):
+    super().__init__(name, cost, encumbrance, group, damage, qualities, availability, two_handed)
     self.range = range
     self.reload = reload
 
     missile_weapons.append(self)
 
-
-fists = MeleeWeapon(name = "Fists",
+# ----- ONE HANDED MELEE WEAPONS -----
+fist = MeleeWeapon(name = "Fist",
                     cost = 0,
                     encumbrance = 0,
                     group = "Ordinary",
-                    damage = 1,
+                    damage = -4,
                     qualities = [],
-                    availability = "Common")
+                    availability = "Common",
+                    two_handed = False)
 
+axe = MeleeWeapon(name = "Axe",
+                        cost = 60,
+                        encumbrance = 45,
+                        group = "Ordinary",
+                        damage = 0,
+                        qualities = ["Impact"],
+                        availability = "Scarce",
+                        two_handed = False)
+
+hammer = MeleeWeapon(name = "Hammer",
+                        cost = 70,
+                        encumbrance = 65,
+                        group = "Ordinary",
+                        damage = 0,
+                        qualities = ["Pummelling"],
+                        availability = "Scarce",
+                        two_handed = False)
+
+militaryPick = MeleeWeapon(name = "Military Pick",
+                        cost = 90,
+                        encumbrance = 60,
+                        group = "Ordinary",
+                        damage = 0,
+                        qualities = ["Armour Piercing", "Slow"],
+                        availability = "Very Rare",
+                        two_handed = False)
+
+sword = MeleeWeapon(name = "Sword",
+                        cost = 45,
+                        encumbrance = 45,
+                        group = "Ordinary",
+                        damage = 0,
+                        qualities = ["Defensive"],
+                        availability = "Scarce",
+                        two_handed = False)
+
+# ----- TWO HANDED MELEE WEAPONS -----
+greatAxe = MeleeWeapon(name = "Great Axe",
+                        cost = 120,
+                        encumbrance = 180,
+                        group = "Two-handed",
+                        damage = 1,
+                        qualities = ["Impact", "Slow", "Tiring"],
+                        availability = "Rare",
+                        two_handed = True)
+
+# ----- MISSILE WEAPONS -----
 hochlandLongRifle = MissileWeapon(name = "Hohland Long Rifle",
                                cost = 450,
                                encumbrance = 70,
@@ -55,15 +105,15 @@ hochlandLongRifle = MissileWeapon(name = "Hohland Long Rifle",
                                qualities = ["Impact", "Unreliable"],
                                availability = "Very Rare")
 
-#TESTING
+# ----- TESTING -----
 if __name__ == "__main__":
-  print(f"Weapon name: {fists.name}")
-  print(f"Cost: {fists.cost}")
-  print(f"Encumbrance: {fists.encumbrance}")
-  print(f"Group: {fists.group}")
-  print(f"Damage: {fists.damage}")
-  print(f"Qualities: {fists.qualities}")
-  print(f"Availability: {fists.availability}")
+  print(f"Weapon name: {fist.name}")
+  print(f"Cost: {fist.cost}")
+  print(f"Encumbrance: {fist.encumbrance}")
+  print(f"Group: {fist.group}")
+  print(f"Damage: {fist.damage}")
+  print(f"Qualities: {fist.qualities}")
+  print(f"Availability: {fist.availability}")
   print(f" ")
   print(f"Weapon name: {hochlandLongRifle.name}")
   print(f"Cost: {hochlandLongRifle.cost}")
