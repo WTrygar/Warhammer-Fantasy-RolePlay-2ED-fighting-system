@@ -3,7 +3,7 @@ from abc import ABC
 from random import randint
 
 from health_bar import HealthBar
-from warhammer_weapons import fists, hochlandLongRifle
+from warhammer_weapons import fist, hochlandLongRifle
 
 enemies = []
 playable_characters = []
@@ -105,7 +105,7 @@ class Character(ABC):
       print(f"{self.name} has fallen in battle...")
       return
     
-    dmg = self.picked_weapon.damage
+    dmg = max(self.picked_weapon.damage + self.strength_bonus, 1)
 
     target.get_damaged(dmg, self)
     

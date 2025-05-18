@@ -5,15 +5,19 @@ import sys
 sys.path.append(os.path.realpath("."))
 import inquirer  # noqa
 
-from warhammer_character import EnemyCharacter, enemies
+from warhammer_character import (EnemyCharacter, all_characters, enemies,
+                                 playable_characters)
 from warhammer_character_list import helmut
-from warhammer_weapons import fists, hochlandLongRifle
+from warhammer_weapons import fist, hochlandLongRifle
 
 # setup
-hero = helmut
+heroes = sorted(playable_characters, key=lambda x: x.agility, reverse=True)
+characters = sorted(all_characters, key=lambda x: x.agility, reverse=True)
+
 
 # game class
 class Game:
+  index = 0
   def __init__(self):
     self.running = True
     
@@ -32,11 +36,19 @@ class Game:
       input("YOU WIN")
       exit()
 
+  @staticmethod
+  def check_index() -> None:
+    if Game.index + 1 >= len(all_characters):
+      Game.index = 0
+    else:
+      Game.index += 1
+    return
+
   def run(self):
     enemy = self.spawn_enemy()
     while self.running:
       Game.clear()
-
+      print(f"----- {all_characters[Game.index]} Turn -----")
       actions = [
         inquirer.List(
           "action",
@@ -49,19 +61,21 @@ class Game:
       match term:
         case "standard attack":
           print(f"We have attacked!")
-          hero.standard_attack(enemy)
-          enemy.standard_attack(hero)
-          hero.health_bar.draw()
+          characters[Game.index].standard_attack(enemies[0])
+          enemy.standard_attack(heroes[0])
+          characters[Game.index].health_bar.draw()
           enemy.health_bar.draw()
+          Game.check_index()
           input()
         case "nothing":
           print(f"You did nothing")
-          enemy.standard_attack(hero)
-          hero.health_bar.draw()
+          enemy.standard_attack(heroes[0])
+          heroes[0].health_bar.draw()
           enemy.health_bar.draw()
+          Game.check_index()
           input()
 
-      self.running = hero.alive
+      self.running = heroes[0].alive
 
       if not enemy.alive:
         enemies.pop(0)
@@ -71,5 +85,6 @@ class Game:
 
 # game loop
 if __name__ == "__main__":
+  # print(heroes)
   game = Game()
   game.run()

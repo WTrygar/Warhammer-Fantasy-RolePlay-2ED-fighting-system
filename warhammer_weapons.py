@@ -103,7 +103,8 @@ hochlandLongRifle = MissileWeapon(name = "Hohland Long Rifle",
                                range = [48, 96],
                                reload = 4,
                                qualities = ["Impact", "Unreliable"],
-                               availability = "Very Rare")
+                               availability = "Very Rare",
+                               two_handed = True)
 
 # ----- TESTING -----
 if __name__ == "__main__":
