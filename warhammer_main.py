@@ -1,5 +1,9 @@
 # imports
 import os
+import sys
+
+sys.path.append(os.path.realpath("."))
+import inquirer  # noqa
 
 from warhammer_character import EnemyCharacter, enemies
 from warhammer_character_list import helmut
@@ -33,13 +37,29 @@ class Game:
     while self.running:
       Game.clear()
 
-      hero.standard_attack(enemy)
-      enemy.standard_attack(hero)
-
-      hero.health_bar.draw()
-      enemy.health_bar.draw()
-
-      input()
+      actions = [
+        inquirer.List(
+          "action",
+          message="What do You want to do?",
+          choices=["standard attack", "nothing"],
+        ),
+      ]
+      answers = inquirer.prompt(actions)
+      term = answers['action']
+      match term:
+        case "standard attack":
+          print(f"We have attacked!")
+          hero.standard_attack(enemy)
+          enemy.standard_attack(hero)
+          hero.health_bar.draw()
+          enemy.health_bar.draw()
+          input()
+        case "nothing":
+          print(f"You did nothing")
+          enemy.standard_attack(hero)
+          hero.health_bar.draw()
+          enemy.health_bar.draw()
+          input()
 
       self.running = hero.alive
 
