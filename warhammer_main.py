@@ -48,7 +48,7 @@ class Game:
     enemy = self.spawn_enemy()
     while self.running:
       Game.clear()
-      print(f"----- {all_characters[Game.index]} Turn -----")
+      print(f"----- {characters[Game.index]} Turn -----")
       actions = [
         inquirer.List(
           "action",
@@ -60,18 +60,24 @@ class Game:
       term = answers['action']
       match term:
         case "standard attack":
-          print(f"We have attacked!")
-          characters[Game.index].standard_attack(enemies[0])
-          enemy.standard_attack(heroes[0])
-          characters[Game.index].health_bar.draw()
-          enemy.health_bar.draw()
+          pick_target = [
+            inquirer.List(
+              "target",
+              message="Who's your target?",
+              choices=[character for character in characters],
+            ),
+          ]
+          answers_2 = inquirer.prompt(pick_target)
+          term = answers_2["target"]
+          characters[Game.index].standard_attack(characters[characters.index(term)])
+          for i in range(len(characters)):
+            characters[i].health_bar.draw()
           Game.check_index()
           input()
         case "nothing":
           print(f"You did nothing")
-          enemy.standard_attack(heroes[0])
-          heroes[0].health_bar.draw()
-          enemy.health_bar.draw()
+          for i in range(len(characters)):
+            characters[i].health_bar.draw()
           Game.check_index()
           input()
 
