@@ -69,6 +69,9 @@ class Character(ABC):
     self.items = items
     self.spells = spells
 
+    self.main_hand = weapons[0]
+    self.off_hand = weapons[0]
+
     all_characters.append(self)
   
   def __repr__(self):
@@ -81,7 +84,8 @@ class Character(ABC):
   @staticmethod
   def roll_event(stat_chance: int) -> bool:
     rolled_event = randint(1, 100)
-    return rolled_event <= stat_chance
+    print(f"d100 roll: {rolled_event}")
+    return rolled_event >= stat_chance
   
   # ----- BASIC ACTIONS -----
   
@@ -104,8 +108,12 @@ class Character(ABC):
     if not self.alive:
       print(f"{self.name} has fallen in battle...")
       return
+    if self.roll_event(self.weapon_skills):
+      print(f"{self.name}'s weapon skills: {self.weapon_skills}")
+      print(f"{self.name} missed the attack!")
+      return
     
-    dmg = max(self.picked_weapon.damage + self.strength_bonus, 1)
+    dmg = max(self.main_hand.damage + self.strength_bonus, 1)
 
     target.get_damaged(dmg, self)
     
@@ -138,7 +146,8 @@ class Character(ABC):
     self.health -= dmg
     self.health = max(self.health, 0)
     self.health_bar.update()
-    print(f"{attacker.name} dealt {dmg} damage to {self.name} with {attacker.picked_weapon.name}")
+    print(f"{attacker.name}'s weapon skills: {attacker.weapon_skills}")
+    print(f"{attacker.name} dealt {dmg} damage to {self.name} with {attacker.main_hand.name}")
 
 # ----- First Child Class -----
 class PlayerCharacter(Character):
@@ -170,7 +179,6 @@ class PlayerCharacter(Character):
     self.strength_bonus = strength // 10
     self.toughness_bonus = toughness // 10
 
-    self.picked_weapon = weapons[0]
     self.health_bar = HealthBar(self, color="green")
 
     playable_characters.append(self)
@@ -205,7 +213,6 @@ class EnemyCharacter(Character):
     self.strength_bonus = strength // 10
     self.toughness_bonus = toughness // 10
 
-    self.picked_weapon = weapons[0]
     self.health_bar = HealthBar(self, color="red")
 
     enemies.append(self)

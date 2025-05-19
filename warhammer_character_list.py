@@ -1,6 +1,6 @@
 from warhammer_character import (EnemyCharacter, PlayerCharacter,
                                  all_characters, enemies, playable_characters)
-from warhammer_weapons import fist, hochlandLongRifle, axe
+from warhammer_weapons import axe, fist, hochlandLongRifle
 
 # ----- PLAYABLE CHARACTERS -----
 helmut: PlayerCharacter = PlayerCharacter(name = "Helmut",
@@ -25,49 +25,49 @@ helmut: PlayerCharacter = PlayerCharacter(name = "Helmut",
                          items = [],
                          spells = ())
 
-snorri: PlayerCharacter = PlayerCharacter(name = "Snorri",
-                         race = "Dwarf",
-                         career = "Slayer",
-                         weapon_skill = 35,
-                         ballistic_skill = 25,
-                         strength = 35,
-                         toughness = 35,
-                         agility = 30,
-                         intelligence = 20,
-                         will_power = 30,
-                         fellowship = 25,
-                         attacks = 1,
-                         health_max = 15,
-                         health = 15,
-                         movement = 3,
-                         magic = 0,
-                         insanity_points = 0,
-                         fate_points = 2,
-                         weapons = [axe, fist],
-                         items = [],
-                         spells = ())
+# snorri: PlayerCharacter = PlayerCharacter(name = "Snorri",
+#                          race = "Dwarf",
+#                          career = "Slayer",
+#                          weapon_skill = 35,
+#                          ballistic_skill = 25,
+#                          strength = 35,
+#                          toughness = 35,
+#                          agility = 30,
+#                          intelligence = 20,
+#                          will_power = 30,
+#                          fellowship = 25,
+#                          attacks = 1,
+#                          health_max = 15,
+#                          health = 15,
+#                          movement = 3,
+#                          magic = 0,
+#                          insanity_points = 0,
+#                          fate_points = 2,
+#                          weapons = [fist, axe],
+#                          items = [],
+#                          spells = ())
 
-lerthan: PlayerCharacter = PlayerCharacter(name = "Lerthan",
-                         race = "Elf",
-                         career = "kithband warrior",
-                         weapon_skill = 30,
-                         ballistic_skill = 35,
-                         strength = 30,
-                         toughness = 30,
-                         agility = 40,
-                         intelligence = 25,
-                         will_power = 30,
-                         fellowship = 35,
-                         attacks = 1,
-                         health_max = 13,
-                         health = 13,
-                         movement = 5,
-                         magic = 0,
-                         insanity_points = 0,
-                         fate_points = 1,
-                         weapons = [hochlandLongRifle, fist],
-                         items = [],
-                         spells = ())
+# lerthan: PlayerCharacter = PlayerCharacter(name = "Lerthan",
+#                          race = "Elf",
+#                          career = "kithband warrior",
+#                          weapon_skill = 30,
+#                          ballistic_skill = 35,
+#                          strength = 30,
+#                          toughness = 30,
+#                          agility = 40,
+#                          intelligence = 25,
+#                          will_power = 30,
+#                          fellowship = 35,
+#                          attacks = 1,
+#                          health_max = 13,
+#                          health = 13,
+#                          movement = 5,
+#                          magic = 0,
+#                          insanity_points = 0,
+#                          fate_points = 1,
+#                          weapons = [fist, hochlandLongRifle ],
+#                          items = [],
+#                          spells = ())
 
 
 
@@ -94,27 +94,27 @@ archaon: EnemyCharacter = EnemyCharacter(name = "Archaon the Everchosen",
                          items = [],
                          spells = ())
 
-manfred: EnemyCharacter = EnemyCharacter(name = "Manfred",
-                         race = "Vampire",
-                         career = "Vampire Lord",
-                         weapon_skill = 60,
-                         ballistic_skill = 40,
-                         strength = 60,
-                         toughness = 60,
-                         agility = 50,
-                         intelligence = 70,
-                         will_power = 70,
-                         fellowship = 50,
-                         attacks = 2,
-                         health_max = 50,
-                         health = 50,
-                         movement = 4,
-                         magic = 3,
-                         insanity_points = 10,
-                         fate_points = 3,
-                         weapons = [fist],
-                         items = [],
-                         spells = ())
+# manfred: EnemyCharacter = EnemyCharacter(name = "Manfred",
+#                          race = "Vampire",
+#                          career = "Vampire Lord",
+#                          weapon_skill = 60,
+#                          ballistic_skill = 40,
+#                          strength = 60,
+#                          toughness = 60,
+#                          agility = 50,
+#                          intelligence = 70,
+#                          will_power = 70,
+#                          fellowship = 50,
+#                          attacks = 2,
+#                          health_max = 50,
+#                          health = 50,
+#                          movement = 4,
+#                          magic = 3,
+#                          insanity_points = 10,
+#                          fate_points = 3,
+#                          weapons = [fist],
+#                          items = [],
+#                          spells = ())
 
 
 # ----- TESTING -----
@@ -139,7 +139,9 @@ if __name__ == "__main__":
   print(f"Insanity Points (IP): {helmut.insanity_points}")
   print(f"Fate Points (FP): {helmut.fate_points}")
   print(f"Weapons: {helmut.weapons}")
-  print(f"Currently picked weapon: {helmut.picked_weapon}")
+  print(f"What's in main hand?: {helmut.main_hand}")
+  print(f"What's in off hand?: {helmut.off_hand}")
+
   print(f" ")
   print(f"Name: {archaon.name}")
   print(f"Race: {archaon.race}")
