@@ -3,7 +3,7 @@ from abc import ABC
 from random import randint
 
 from health_bar import HealthBar
-from weapons import fist, hochlandLongRifle
+from warhammer.weapons import fist, hochlandLongRifle
 
 enemies = []
 playable_characters = []
