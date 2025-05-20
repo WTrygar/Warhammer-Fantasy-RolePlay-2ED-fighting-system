@@ -1,6 +1,6 @@
-from warhammer_character import (EnemyCharacter, PlayerCharacter,
+from character import (EnemyCharacter, PlayerCharacter,
                                  all_characters, enemies, playable_characters)
-from warhammer_weapons import axe, fist, hochlandLongRifle
+from weapons import axe, fist, hochlandLongRifle
 
 # ----- PLAYABLE CHARACTERS -----
 helmut: PlayerCharacter = PlayerCharacter(name = "Helmut",

@@ -5,10 +5,10 @@ import sys
 sys.path.append(os.path.realpath("."))
 import inquirer  # noqa
 
-from warhammer_character import (EnemyCharacter, all_characters, enemies,
+from character import (EnemyCharacter, all_characters, enemies,
                                  playable_characters)
-from warhammer_character_list import helmut
-from warhammer_weapons import fist, hochlandLongRifle
+from character_list import helmut
+from weapons import fist, hochlandLongRifle
 
 # setup
 heroes = sorted(playable_characters, key=lambda x: x.agility, reverse=True)
