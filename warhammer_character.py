@@ -82,10 +82,10 @@ class Character(ABC):
     return self.health > 0
   
   @staticmethod
-  def roll_event(stat_chance: int) -> bool:
+  def roll_event_100(stat_chance: int) -> bool:
     rolled_event = randint(1, 100)
     print(f"d100 roll: {rolled_event}")
-    return rolled_event >= stat_chance
+    return rolled_event > stat_chance
   
   # ----- BASIC ACTIONS -----
   
@@ -108,7 +108,7 @@ class Character(ABC):
     if not self.alive:
       print(f"{self.name} has fallen in battle...")
       return
-    if self.roll_event(self.weapon_skills):
+    if self.roll_event_100(self.weapon_skills):
       print(f"{self.name}'s weapon skills: {self.weapon_skills}")
       print(f"{self.name} missed the attack!")
       return
