@@ -3,6 +3,8 @@ import os
 import sys
 
 sys.path.append(os.path.realpath("."))
+import re
+
 import inquirer  # noqa
 
 from warhammer.character import (EnemyCharacter, all_characters, enemies,
@@ -10,12 +12,19 @@ from warhammer.character import (EnemyCharacter, all_characters, enemies,
 from warhammer.character_list import helmut
 from warhammer.weapons import fist, hochlandLongRifle
 
-# setup
+# list of all playable characters
 heroes = sorted(playable_characters, key=lambda x: x.agility, reverse=True)
+
+# list of all characters (mutable)
 characters = sorted(all_characters, key=lambda x: x.agility, reverse=True)
+
+# list of all characters (unmutable)
 characters_static = sorted(all_characters, key=lambda x: x.agility, reverse=True)
 
+# list of all enemy characters to check if all are dead
 dead_enemies_checker = sorted(enemies, key=lambda x: x.agility, reverse=True)
+
+# list of all playable characters to check if all are dead
 dead_heroes_checker = sorted(playable_characters, key=lambda x: x.agility, reverse=True)
 
 # game class
@@ -25,54 +34,71 @@ class Game:
     self.running = True
     
   @staticmethod  
-  def clear():
+  def clear(): #function that clears the terminal
     os.system("cls")
 
   @staticmethod 
-  def spawn_enemy() -> EnemyCharacter:
+  def spawn_enemy() -> EnemyCharacter: #function that spawns enemy (used previously when fights were 1 vs 1)
     Game.clear()
     
 
   @staticmethod
-  def check_index() -> None: #function that skip dead characters turns
-    while characters_static[Game.index].health == 0:
-      print(f"DEAD current value of index: {Game.index}")
-      if Game.index == 0:
-        Game.index += 1
-        print(f"DEAD index was 0, hence increment: {Game.index}")
-      elif Game.index + 1 >= len(all_characters):
-        Game.index = 0
-        print(f"DEAD index would get out of range, so we set it to 0: {Game.index}")
-      else:
-        Game.index += 1
-        print(f"DEAD not zero increment: {Game.index}")
-      print(characters_static[Game.index])
-    if Game.index + 1 >= len(all_characters):
+  def check_index() -> None: #function that keeps track of which character turn it is, skips those that are dead
+    if Game.index + 1 >= len(characters_static):
       Game.index = 0
       while characters_static[Game.index].health == 0:
-        print(f"DEAD current value of index: {Game.index}")
-        if Game.index == 0:
-          Game.index += 1
-          print(f"DEAD index was 0, hence increment: {Game.index}")
-        elif Game.index + 1 >= len(all_characters):
+        Game.index += 1
+    else:
+      Game.index += 1
+      while characters_static[Game.index].health == 0:
+        if Game.index + 1 > len(characters_static):
           Game.index = 0
-          print(f"DEAD index would get out of range, so we set it to 0: {Game.index}")
         else:
           Game.index += 1
-          print(f"DEAD not zero increment: {Game.index}")
-        print(characters_static[Game.index])
-      print(f"NOT DEAD out of bounds: {Game.index}")
-    elif characters_static[Game.index].health != 0:
-      print(characters_static[Game.index])
-      Game.index += 1
-      print(f"NOT DEAD increment: {Game.index}")
+
     return
 
+    
+
+
+    # while characters_static[Game.index].health == 0: #check if current character is dead
+    #   print(f"CHARACTER IS DEAD current value of index: {Game.index} - {characters_static[Game.index]}")
+    #   if Game.index + 1 != len(characters_static):
+    #     Game.index += 1
+    #     print(f"CHARACTER: {characters_static[Game.index]} - {Game.index}")
+    #   elif Game.index + 1 >= len(characters_static):
+    #     Game.index = 0
+    #     print(f"Out of bounds, lets reset back to zero : {Game.index}")
+    #   else:
+    #     Game.index += 1
+    #     print(f"DEAD not zero increment: {Game.index}")
+    #   print(characters_static[Game.index])
+    # if Game.index + 1 >= len(characters_static):
+    #   Game.index = 0
+    #   while characters_static[Game.index].health == 0:
+    #     print(f"DEAD current value of index: {Game.index}")
+    #     if Game.index == 0:
+    #       Game.index += 1
+    #       print(f"DEAD index was 0, hence increment: {Game.index}")
+    #     elif Game.index + 1 >= len(all_characters):
+    #       Game.index = 0
+    #       print(f"DEAD index would get out of range, so we set it to 0: {Game.index}")
+    #     else:
+    #       Game.index += 1
+    #       print(f"DEAD not zero increment: {Game.index}")
+    #     print(characters_static[Game.index])
+    #   print(f"NOT DEAD out of bounds: {Game.index}")
+    # elif characters_static[Game.index].health != 0:
+    #   print(f"now was {characters_static[Game.index]}'s turn - index: {Game.index}")
+    #   Game.index += 1
+    #   print(f"NOT DEAD increment: now will be {characters_static[Game.index]}'s turn - index: {Game.index}")
+    # return
+
   def run(self):
-    enemy = self.spawn_enemy()
+    # enemy = self.spawn_enemy()
     while self.running:
       Game.clear()
-      print(f"----- {characters_static[Game.index]} Turn -----")
+      print(f"----- {characters_static[Game.index]} Turn: {Game.index} -----")
       actions = [
         inquirer.List(
           "action",
@@ -95,11 +121,8 @@ class Game:
           term = answers_2["target"]
           characters_static[Game.index].standard_attack(characters[characters.index(term)])
           
-          for i in range(len(heroes)):
-            heroes[i].health_bar.draw()
-          
-          for i in range(len(dead_enemies_checker)):
-            dead_enemies_checker[i].health_bar.draw()
+          for i in range(len(characters)):
+            characters[i].health_bar.draw()
             
           if characters[characters.index(term)].health == 0:
             if isinstance(characters[characters.index(term)], EnemyCharacter):

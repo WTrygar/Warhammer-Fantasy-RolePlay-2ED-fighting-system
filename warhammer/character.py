@@ -11,6 +11,7 @@ all_characters = []
 
 # ----- Parent Class -----
 class Character(ABC):
+  
   health_bar: HealthBar
   def __init__(self,
                #name, race and class of character
