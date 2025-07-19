@@ -108,7 +108,11 @@ class Character(ABC):
     ... #character uses an item from it's inventory, takes atleast half an action -> time of action >= 1
 
   def standard_attack(self, target) -> None:
-    
+    """function that simulates standard attack action.
+    Character is rolling for the weapon_skill using function roll_event_100.
+    dmg is being calculated based on damage of main_hand_weapon + bonus of strength stat.
+    If for some reason it would be less than 1, character deals 1 damage.
+    """
     if self.roll_event_100(self.weapon_skills):
       print(f"{self.name}'s weapon skills: {self.weapon_skills}")
       print(f"{self.name} missed the attack!")
@@ -145,6 +149,7 @@ class Character(ABC):
     
   # ----- HELPER FUNCTIONS ----- 
   def get_damaged(self, dmg: int, attacker) -> None:
+    """function that handles subtracting health while character is getting damaged."""
     self.health -= dmg
     self.health = max(self.health, 0)
     self.health_bar.update()
