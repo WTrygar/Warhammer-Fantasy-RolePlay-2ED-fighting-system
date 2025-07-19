@@ -80,10 +80,12 @@ class Character(ABC):
   
   @property
   def alive(self) -> bool:
+    """Function that returns true if health of certain character is bigger than zero."""
     return self.health > 0
   
   @staticmethod
   def roll_event_100(stat_chance: int) -> bool:
+    """Function that simulates rolling d100, if rolled event is smaller than the stat_chance, action performs correclty."""
     rolled_event = randint(1, 100)
     print(f"d100 roll: {rolled_event}")
     return rolled_event > stat_chance
@@ -106,9 +108,7 @@ class Character(ABC):
     ... #character uses an item from it's inventory, takes atleast half an action -> time of action >= 1
 
   def standard_attack(self, target) -> None:
-    if not self.alive:
-      print(f"{self.name} has fallen in battle...")
-      return
+    
     if self.roll_event_100(self.weapon_skills):
       print(f"{self.name}'s weapon skills: {self.weapon_skills}")
       print(f"{self.name} missed the attack!")
@@ -118,6 +118,7 @@ class Character(ABC):
 
     target.get_damaged(dmg, self)
     
+
   def swift_attack(self, target) -> None:
     ... #The character can make a number of melee or ranged attacks equal to his attacks characteristic. The character must have attacks >= 2 or better to take advantage of this action. If making a missile attack, a character can only use this action if the weapon can be reloaded as a free action or if the chararcter has a loaded pistol weapon in each hand. In the latter case, the character can make a maximum of 2 attacks (one per weapon)
 
@@ -149,6 +150,9 @@ class Character(ABC):
     self.health_bar.update()
     print(f"{attacker.name}'s weapon skills: {attacker.weapon_skills}")
     print(f"{attacker.name} dealt {dmg} damage to {self.name} with {attacker.main_hand.name}")
+    if not self.alive:
+      print(f"{self.name} has fallen in battle...")
+
 
 # ----- First Child Class -----
 class PlayerCharacter(Character):

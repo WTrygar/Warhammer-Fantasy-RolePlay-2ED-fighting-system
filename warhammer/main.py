@@ -32,16 +32,19 @@ class Game:
     self.running = True
     
   @staticmethod  
-  def clear(): #function that clears the terminal
+  def clear(): 
+    """function that clears the terminal"""
     os.system("cls")
 
   @staticmethod 
-  def spawn_enemy() -> EnemyCharacter: #function that spawns enemy (used previously when fights were 1 vs 1)
+  def spawn_enemy() -> EnemyCharacter: 
+    """function that spawns enemy (used previously when fights were 1 vs 1)"""
     Game.clear()
     
 
   @staticmethod
-  def check_index() -> None: #function that keeps track of which character turn it is, skips those that are dead
+  def check_index() -> None: 
+    """function that keeps track of which character turn it is, skips those that are dead"""
     if Game.index + 1 >= len(characters_static):
       Game.index = 0
       while characters_static[Game.index].health == 0:
@@ -56,7 +59,7 @@ class Game:
     return
 
   def run(self):
-    # enemy = self.spawn_enemy()
+    """function that handles the choice of chararcter actions and the targets of these actions if needed"""
     while self.running:
       Game.clear()
       print(f"----- {Game.index}. {characters_static[Game.index]}'s turn -----")
