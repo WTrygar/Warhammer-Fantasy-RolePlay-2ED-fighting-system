@@ -30,6 +30,7 @@ class Game:
   index = 0
   def __init__(self):
     self.running = True
+
     
   @staticmethod  
   def clear(): 
@@ -63,6 +64,7 @@ class Game:
     while self.running:
       Game.clear()
       print(f"----- {Game.index}. {characters_static[Game.index]}'s turn -----")
+
       actions = [
         inquirer.List(
           "action",
@@ -72,6 +74,7 @@ class Game:
       ]
       answers = inquirer.prompt(actions)
       term = answers['action']
+
       match term:
         case "standard attack":
           pick_target = [
@@ -98,6 +101,7 @@ class Game:
             print(characters)
           Game.check_index()
           input()
+          
         case "nothing":
           print(f"{characters_static[Game.index]} did nothing")
           for i in range(len(characters)):

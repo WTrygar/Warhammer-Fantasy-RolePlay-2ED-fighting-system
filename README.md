@@ -6,3 +6,11 @@ Ex. Parent Class Character and it's children - PlayerCharacter and EnemyCharacte
 
 Right now code can handle group battles that ends when all of the heroes or all of the enemies are dead.
 Characters can either attack anyone, or do nothing (more actions will be added in the future)
+
+Features that will be added in the future:
+- Casting spells -> create a spell class,
+- Using items -> create an item class,
+- More actions -> create functions in Character class,
+- Handling more actions of one character in one turn, for example: multiple attacks, using spells, items or specific actions,
+- Create more characters and weapons.
+
