@@ -90,6 +90,51 @@ class Character(ABC):
     print(f"d100 roll: {rolled_event}")
     return rolled_event > stat_chance
   
+  @staticmethod
+  def roll_event_20(stat_chance: int) -> bool:
+    """Function that simulates rolling d20, if rolled event is smaller than the stat_chance, action performs correclty."""
+    rolled_event = randint(1, 20)
+    print(f"d20 roll: {rolled_event}")
+    return rolled_event > stat_chance
+  
+  @staticmethod
+  def roll_event_12(stat_chance: int) -> bool:
+    """Function that simulates rolling d12, if rolled event is smaller than the stat_chance, action performs correclty."""
+    rolled_event = randint(1, 12)
+    print(f"d12 roll: {rolled_event}")
+    return rolled_event > stat_chance
+  
+  @staticmethod
+  def roll_event_10(stat_chance: int) -> bool:
+    """Function that simulates rolling d10, if rolled event is smaller than the stat_chance, action performs correclty."""
+    rolled_event = randint(1, 10)
+    print(f"d10 roll: {rolled_event}")
+    return rolled_event > stat_chance
+  
+  @staticmethod
+  def roll_event_8(stat_chance: int) -> bool:
+    """Function that simulates rolling d8, if rolled event is smaller than the stat_chance, action performs correclty."""
+    rolled_event = randint(1, 8)
+    print(f"d8 roll: {rolled_event}")
+    return rolled_event > stat_chance
+  
+  @staticmethod
+  def roll_event_6(stat_chance: int) -> bool:
+    """Function that simulates rolling d6, if rolled event is smaller than the stat_chance, action performs correclty."""
+    rolled_event = randint(1, 6)
+    print(f"d6 roll: {rolled_event}")
+    return rolled_event > stat_chance
+  
+  @staticmethod
+  def roll_event_4(stat_chance: int) -> bool:
+    """Function that simulates rolling d4, if rolled event is smaller than the stat_chance, action performs correclty."""
+    rolled_event = randint(1, 4)
+    print(f"d4 roll: {rolled_event}")
+    return rolled_event > stat_chance
+  
+  
+
+  
   # ----- BASIC ACTIONS -----
   
   def aim(self, target) -> None:
