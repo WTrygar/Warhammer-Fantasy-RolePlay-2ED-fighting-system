@@ -80,7 +80,7 @@ class Character(ABC):
   
   @property
   def alive(self) -> bool:
-    """Function that returns true if health of certain character is bigger than zero."""
+    """Function checks if health of certain character is bigger than zero, returns True if so."""
     return self.health > 0
   
   @staticmethod
@@ -132,9 +132,6 @@ class Character(ABC):
     print(f"d4 roll: {rolled_event}")
     return rolled_event > stat_chance
   
-  
-
-  
   # ----- BASIC ACTIONS -----
   
   def aim(self, target) -> None:
@@ -167,7 +164,6 @@ class Character(ABC):
 
     target.get_damaged(dmg, self)
     
-
   def swift_attack(self, target) -> None:
     ... #The character can make a number of melee or ranged attacks equal to his attacks characteristic. The character must have attacks >= 2 or better to take advantage of this action. If making a missile attack, a character can only use this action if the weapon can be reloaded as a free action or if the chararcter has a loaded pistol weapon in each hand. In the latter case, the character can make a maximum of 2 attacks (one per weapon)
 
@@ -194,7 +190,11 @@ class Character(ABC):
     
   # ----- HELPER FUNCTIONS ----- 
   def get_damaged(self, dmg: int, attacker) -> None:
-    """function that handles subtracting health while character is getting damaged."""
+    """
+    function that handles subtracting health while character is getting damaged.
+    If health of the target would be reduced to zero, then the target dies
+    (is removed from the battle - both resurrecting and necromancy are not planned features for the near future ;) )
+    """
     self.health -= dmg
     self.health = max(self.health, 0)
     self.health_bar.update()
@@ -202,7 +202,6 @@ class Character(ABC):
     print(f"{attacker.name} dealt {dmg} damage to {self.name} with {attacker.main_hand.name}")
     if not self.alive:
       print(f"{self.name} has fallen in battle...")
-
 
 # ----- First Child Class -----
 class PlayerCharacter(Character):
