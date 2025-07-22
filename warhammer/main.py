@@ -54,6 +54,7 @@ class Game:
     """function that keeps track of which character turn it is, skips those that are dead"""
     # implement action counter
     if Game.action_counter == 0:
+      Game.action_counter = 4
       if Game.index + 1 >= len(characters_static):
         Game.index = 0
         while characters_static[Game.index].health == 0:
@@ -72,20 +73,21 @@ class Game:
     """function that handles the choice of chararcter actions and the targets of these actions if needed"""
     while self.running:
       Game.clear()
-      print(f"----- {Game.index}. {characters_static[Game.index]}'s turn -----")
+      print(f"----- {Game.index + 1}. {characters_static[Game.index]}'s turn -----")
+      print(f" Remaining actions: {Game.action_counter}")
 
       actions = [
         inquirer.List(
           "action",
           message="What do You want to do?",
-          choices=["standard attack", "nothing"],
+          choices=["standard attack - 2", "nothing - skip turn"],
         ),
       ]
       answers = inquirer.prompt(actions)
       term = answers['action']
 
       match term:
-        case "standard attack":
+        case "standard attack - 2":
           pick_target = [
             inquirer.List(
               "target",
@@ -112,8 +114,8 @@ class Game:
           Game.check_index()
           input()
           
-        case "nothing":
-          print(f"{characters_static[Game.index]} did nothing")
+        case "nothing - skip turn":
+          print(f"{characters_static[Game.index]} did nothing and skipped it's turn")
           for i in range(len(characters)):
             characters[i].health_bar.draw()
           Game.action_counter = 0
