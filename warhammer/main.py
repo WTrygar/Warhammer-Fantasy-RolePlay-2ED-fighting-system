@@ -27,7 +27,13 @@ dead_heroes_checker = sorted(playable_characters, key=lambda x: x.agility, rever
 
 # game class
 class Game:
+  """class that handles the battle.
+  vars:
+  - index - int that keeps track which character's turn is it. Increments after the end of characters turn. Resets back to zero when reached the end of the characters queue.
+  - action_counter - int that keeps track how many "actions" can character make in it's turn. Resets back to default value after the end of character's turn.
+  """
   index = 0
+  action_counter = 4
   def __init__(self):
     self.running = True
 
@@ -46,17 +52,20 @@ class Game:
   @staticmethod
   def check_index() -> None: 
     """function that keeps track of which character turn it is, skips those that are dead"""
-    if Game.index + 1 >= len(characters_static):
-      Game.index = 0
-      while characters_static[Game.index].health == 0:
-        Game.index += 1
-    else:
-      Game.index += 1
-      while characters_static[Game.index].health == 0:
-        if Game.index + 1 > len(characters_static):
-          Game.index = 0
-        else:
+    # implement action counter
+    if Game.action_counter == 0:
+      if Game.index + 1 >= len(characters_static):
+        Game.index = 0
+        while characters_static[Game.index].health == 0:
           Game.index += 1
+
+      else:
+        Game.index += 1
+        while characters_static[Game.index].health == 0:
+          if Game.index + 1 > len(characters_static):
+            Game.index = 0
+          else:
+            Game.index += 1
     return
 
   def run(self):
@@ -99,6 +108,7 @@ class Game:
             characters.remove(term)
             print(dead_enemies_checker)
             print(characters)
+          Game.action_counter -= 2
           Game.check_index()
           input()
           
@@ -106,6 +116,7 @@ class Game:
           print(f"{characters_static[Game.index]} did nothing")
           for i in range(len(characters)):
             characters[i].health_bar.draw()
+          Game.action_counter = 0
           Game.check_index()
           input()
 
