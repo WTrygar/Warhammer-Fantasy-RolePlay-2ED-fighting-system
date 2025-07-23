@@ -71,6 +71,10 @@ class Game:
 
   def run(self):
     """function that handles the choice of chararcter actions and the targets of these actions if needed"""
+    for i in range(len(characters)):
+      characters[i].health_bar.draw()
+    input()
+
     while self.running:
       Game.clear()
       print(f"----- {Game.index + 1}. {characters_static[Game.index]}'s turn -----")
@@ -131,7 +135,36 @@ class Game:
     input("GAME OVER")
     exit()
 
+  def menu(self):
+    Game.clear()
+    while self.running:
+      
+
+      options = [
+        inquirer.List(
+          "option",
+          message="Warhammer Fantasy Roleplay 2nd edition Battle Tracker",
+          choices=["Battle", "Create Character - Not yet available", "Update Character - Not yet available", "Update Teams - Not yet available"],
+        ),
+      ]
+      answers = inquirer.prompt(options)
+      term = answers['option']
+
+      match term:
+        case "Battle":
+          game.run()
+
+        case "Create Character - Not yet available":
+          game.menu()
+
+        case "Update Character - Not yet available":
+          game.menu()
+
+        case "Update Teams - Not yet available":
+          game.menu()
+
+
 # game loop
 if __name__ == "__main__":
   game = Game()
-  game.run()
+  game.menu()
