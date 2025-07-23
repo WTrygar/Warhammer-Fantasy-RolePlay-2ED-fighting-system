@@ -3,10 +3,10 @@ import os
 import sys
 
 sys.path.append(os.path.realpath("."))
-import inquirer  # noqa
+import inquirer
 
-from warhammer.character import (EnemyCharacter, all_characters, enemies,
-                                 playable_characters)
+from warhammer.character import (Character, EnemyCharacter, PlayerCharacter,
+                                 all_characters, enemies, playable_characters)
 from warhammer.character_list import helmut
 from warhammer.weapons import fist, hochlandLongRifle
 
@@ -144,7 +144,7 @@ class Game:
         inquirer.List(
           "option",
           message="Warhammer Fantasy Roleplay 2nd edition Battle Tracker",
-          choices=["Battle", "Create Character - Not yet available", "Update Character - Not yet available", "Update Teams - Not yet available"],
+          choices=["Battle", "Create Player Character - Not yet available", "Create Enemy Character - Not yet available", "Update Character - Not yet available", "Update Teams - Not yet available"],
         ),
       ]
       answers = inquirer.prompt(options)
@@ -154,8 +154,13 @@ class Game:
         case "Battle":
           game.run()
 
-        case "Create Character - Not yet available":
-          game.menu()
+        case "Create Player Character - Not yet available":
+          name = input("What's the name of the character: ")
+          character = PlayerCharacter.create_playable_character(name)
+
+        case "Create Enemy Character - Not yet available":
+          name = input("What's the name of the character: ")
+          character = EnemyCharacter.create_enemy_character(name)
 
         case "Update Character - Not yet available":
           game.menu()

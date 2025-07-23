@@ -2,6 +2,8 @@
 from abc import ABC
 from random import randint
 
+import inquirer
+
 from health_bar import HealthBar
 from warhammer.weapons import fist, hochlandLongRifle
 
@@ -77,7 +79,7 @@ class Character(ABC):
   
   def __repr__(self):
     return f'{self.name}'
-  
+
   @property
   def alive(self) -> bool:
     """Function checks if health of certain character is bigger than zero, returns True if so."""
@@ -237,6 +239,117 @@ class PlayerCharacter(Character):
 
     playable_characters.append(self)
 
+  def create_playable_character(self):
+    user_character = {}
+
+    user_character["name"] = input("retype name of the character: ")
+    
+    races = [inquirer.List("race", message="Which race is your character?", choices=["Human", "Elf", "Dwarf", "Halfling"],),]
+    answers = inquirer.prompt(races)
+    term = answers["race"]
+    match term:
+      case "Human":
+        user_character["race"] = "Human"
+      case "Elf":
+        user_character["race"] = "Elf"
+      case "Dwarf":
+        user_character["race"] = "Dwarf"
+      case "Halfling":
+        user_character["race"] = "Halfling"
+
+    user_character["career"] = input("List of careers is long, so please write it correctly: ")
+    user_character["weapon_skills"] = int(input("Please roll d10 twice for weapon skills:"))
+    user_character["ballistic_skills"] = int(input("Please roll d10 twice for ballistic skills:"))
+    user_character["strength"] = int(input("Please roll d10 twice for strength:"))
+    user_character["toughness"] = int(input("Please roll d10 twice for toughness:"))
+    user_character["agility"] = int(input("Please roll d10 twice for agility:"))
+    user_character["intelligence"] = int(input("Please roll d10 twice for intelligence:"))
+    user_character["will_power"] = int(input("Please roll d10 twice for will power:"))
+    user_character["fellowship"] = int(input("Please roll d10 twice for fellowship:"))
+
+    user_character["attacks"] = 1
+
+    message= input("Roll d10 for Wounds and tell us the number: ")
+    match message:
+      case "1" | "2" | "3":
+        user_character["health_max"] = 1
+      case "4" | "5" | "6":
+        user_character["health_max"] = 2
+      case "7" | "8" | "9":
+        user_character["health_max"] = 3
+      case "10":
+        user_character["health_max"] = 4
+
+    match user_character["race"]:
+      case "Human":
+        user_character["health_max"] += 9
+      case "Elf":
+        user_character["health_max"] += 8
+      case "Dwarf":
+        user_character["health_max"] += 10
+      case "Halfling":
+        user_character["health_max"] += 7
+
+
+    user_character["health"] = user_character["health_max"]
+    user_character["strength_bonus"] = user_character["strength"] // 10
+    user_character["toughness_bonus"] = user_character["toughness"] // 10
+
+    match user_character["race"]:
+      case "Human" | "Halfling":
+        user_character["movement"] = 4
+      case "Elf":
+        user_character["movement"] = 5
+      case "Dwarf":
+        user_character["movement"] = 3
+
+    user_character["magic"] = 0
+    user_character["insanity_points"] = 0
+
+    #user_character["fate_points"]
+    match user_character["race"]:
+      case "Human":
+        roll = input("Roll d10 for Fate Points and tell us the number: ")
+        match roll:
+          case "1" | "2" | "3" | "4":
+            user_character["fate_points"] = 2
+          case "5" | "6" | "7" | "8" | "9" | "10":
+            user_character["fate_points"] = 3
+
+      case "Elf":
+        roll = input("Roll d10 for Fate Points and tell us the number: ")
+        match roll:
+          case "1" | "2" | "3" | "4":
+            user_character["fate_points"] = 1
+          case "5" | "6" | "7" | "8" | "9" | "10":
+            user_character["fate_points"] = 2
+
+      case "Dwarf":
+        roll = input("Roll d10 for Fate Points and tell us the number: ")
+        match roll:
+          case "1" | "2" | "3" | "4":
+            user_character["fate_points"] = 1
+          case "5" | "6" | "7":
+            user_character["fate_points"] = 2
+          case "8" | "9" | "10":
+            user_character["fate_points"] = 3
+
+      case "Halfling":
+        roll = input("Roll d10 for Fate Points and tell us the number: ")
+        match roll:
+          case "1" | "2" | "3" | "4" | "5" | "6" | "7":
+            user_character["fate_points"] = 2
+          case "8" | "9" | "10":
+            user_character["fate_points"] = 3
+
+    user_character["weapons"] = [fist]
+    user_character["items"] = []
+    user_character["spells"] = []
+    user_character["main_hand"] = user_character["weapons"][0]
+    user_character["off_hand"] = user_character["weapons"][0]
+
+    all_characters.append(self)
+
 # -----Second Child Class-----
 class EnemyCharacter(Character):
   def __init__(self, name, race, career, weapon_skill, ballistic_skill, strength, toughness, agility, intelligence, will_power, fellowship, attacks, health_max, health, movement, magic, insanity_points, fate_points, weapons, items, spells) -> None:
@@ -270,3 +383,114 @@ class EnemyCharacter(Character):
     self.health_bar = HealthBar(self, color="red")
 
     enemies.append(self)
+
+  def create_enemy_character(self):
+    user_character = {}
+
+    user_character["name"] = input("retype name of the character: ")
+    
+    races = [inquirer.List("race", message="Which race is your character?", choices=["Human", "Elf", "Dwarf", "Halfling"],),]
+    answers = inquirer.prompt(races)
+    term = answers["race"]
+    match term:
+      case "Human":
+        user_character["race"] = "Human"
+      case "Elf":
+        user_character["race"] = "Elf"
+      case "Dwarf":
+        user_character["race"] = "Dwarf"
+      case "Halfling":
+        user_character["race"] = "Halfling"
+
+    user_character["career"] = input("List of careers is long, so please write it correctly: ")
+    user_character["weapon_skills"] = int(input("Please roll d10 twice for weapon skills:"))
+    user_character["ballistic_skills"] = int(input("Please roll d10 twice for ballistic skills:"))
+    user_character["strength"] = int(input("Please roll d10 twice for strength:"))
+    user_character["toughness"] = int(input("Please roll d10 twice for toughness:"))
+    user_character["agility"] = int(input("Please roll d10 twice for agility:"))
+    user_character["intelligence"] = int(input("Please roll d10 twice for intelligence:"))
+    user_character["will_power"] = int(input("Please roll d10 twice for will power:"))
+    user_character["fellowship"] = int(input("Please roll d10 twice for fellowship:"))
+
+    user_character["attacks"] = 1
+
+    message= input("Roll d10 for Wounds and tell us the number: ")
+    match message:
+      case "1" | "2" | "3":
+        user_character["health_max"] = 1
+      case "4" | "5" | "6":
+        user_character["health_max"] = 2
+      case "7" | "8" | "9":
+        user_character["health_max"] = 3
+      case "10":
+        user_character["health_max"] = 4
+
+    match user_character["race"]:
+      case "Human":
+        user_character["health_max"] += 9
+      case "Elf":
+        user_character["health_max"] += 8
+      case "Dwarf":
+        user_character["health_max"] += 10
+      case "Halfling":
+        user_character["health_max"] += 7
+
+
+    user_character["health"] = user_character["health_max"]
+    user_character["strength_bonus"] = user_character["strength"] // 10
+    user_character["toughness_bonus"] = user_character["toughness"] // 10
+
+    match user_character["race"]:
+      case "Human" | "Halfling":
+        user_character["movement"] = 4
+      case "Elf":
+        user_character["movement"] = 5
+      case "Dwarf":
+        user_character["movement"] = 3
+
+    user_character["magic"] = 0
+    user_character["insanity_points"] = 0
+
+    #user_character["fate_points"]
+    match user_character["race"]:
+      case "Human":
+        roll = input("Roll d10 for Fate Points and tell us the number: ")
+        match roll:
+          case "1" | "2" | "3" | "4":
+            user_character["fate_points"] = 2
+          case "5" | "6" | "7" | "8" | "9" | "10":
+            user_character["fate_points"] = 3
+
+      case "Elf":
+        roll = input("Roll d10 for Fate Points and tell us the number: ")
+        match roll:
+          case "1" | "2" | "3" | "4":
+            user_character["fate_points"] = 1
+          case "5" | "6" | "7" | "8" | "9" | "10":
+            user_character["fate_points"] = 2
+
+      case "Dwarf":
+        roll = input("Roll d10 for Fate Points and tell us the number: ")
+        match roll:
+          case "1" | "2" | "3" | "4":
+            user_character["fate_points"] = 1
+          case "5" | "6" | "7":
+            user_character["fate_points"] = 2
+          case "8" | "9" | "10":
+            user_character["fate_points"] = 3
+
+      case "Halfling":
+        roll = input("Roll d10 for Fate Points and tell us the number: ")
+        match roll:
+          case "1" | "2" | "3" | "4" | "5" | "6" | "7":
+            user_character["fate_points"] = 2
+          case "8" | "9" | "10":
+            user_character["fate_points"] = 3
+
+    user_character["weapons"] = [fist]
+    user_character["items"] = []
+    user_character["spells"] = []
+    user_character["main_hand"] = user_character["weapons"][0]
+    user_character["off_hand"] = user_character["weapons"][0]
+
+    all_characters.append(self)
