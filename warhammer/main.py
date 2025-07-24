@@ -10,20 +10,6 @@ from warhammer.character import (Character, EnemyCharacter, PlayerCharacter,
 from warhammer.character_list import helmut
 from warhammer.weapons import fist, hochlandLongRifle
 
-# list of all playable characters
-heroes = sorted(playable_characters, key=lambda x: x.agility, reverse=True)
-
-# list of all characters (mutable)
-characters = sorted(all_characters, key=lambda x: x.agility, reverse=True)
-
-# list of all characters (unmutable)
-characters_static = sorted(all_characters, key=lambda x: x.agility, reverse=True)
-
-# list of all enemy characters to check if all are dead
-dead_enemies_checker = sorted(enemies, key=lambda x: x.agility, reverse=True)
-
-# list of all playable characters to check if all are dead
-dead_heroes_checker = sorted(playable_characters, key=lambda x: x.agility, reverse=True)
 
 # game class
 class Game:
@@ -34,6 +20,22 @@ class Game:
   """
   index = 0
   action_counter = 4
+
+  # list of all playable characters
+  heroes = sorted(playable_characters, key=lambda x: x.agility, reverse=True)
+
+  # list of all characters (mutable)
+  characters = sorted(all_characters, key=lambda x: x.agility, reverse=True)
+
+  # list of all characters (unmutable)
+  characters_static = sorted(all_characters, key=lambda x: x.agility, reverse=True)
+
+  # list of all enemy characters to check if all are dead
+  dead_enemies_checker = sorted(enemies, key=lambda x: x.agility, reverse=True)
+
+  # list of all playable characters to check if all are dead
+  dead_heroes_checker = sorted(playable_characters, key=lambda x: x.agility, reverse=True)
+
   def __init__(self):
     self.running = True
 
@@ -50,20 +52,20 @@ class Game:
     
 
   @staticmethod
-  def check_index() -> None: 
+  def check_index(self) -> None: 
     """function that keeps track of which character turn it is, skips those that are dead"""
     # implement action counter
     if Game.action_counter == 0:
       Game.action_counter = 4
-      if Game.index + 1 >= len(characters_static):
+      if Game.index + 1 >= len(self.characters_static):
         Game.index = 0
-        while characters_static[Game.index].health == 0:
+        while self.characters_static[Game.index].health == 0:
           Game.index += 1
 
       else:
         Game.index += 1
-        while characters_static[Game.index].health == 0:
-          if Game.index + 1 > len(characters_static):
+        while self.characters_static[Game.index].health == 0:
+          if Game.index + 1 > len(self.characters_static):
             Game.index = 0
           else:
             Game.index += 1
@@ -71,13 +73,13 @@ class Game:
 
   def run(self):
     """function that handles the choice of chararcter actions and the targets of these actions if needed"""
-    for i in range(len(characters)):
-      characters[i].health_bar.draw()
+    for i in range(len(self.characters)):
+      self.characters[i].health_bar.draw()
     input()
 
     while self.running:
       Game.clear()
-      print(f"----- {Game.index + 1}. {characters_static[Game.index]}'s turn -----")
+      print(f"----- {Game.index + 1}. {self.characters_static[Game.index]}'s turn -----")
       print(f" Remaining actions: {Game.action_counter}")
 
       actions = [
@@ -96,38 +98,38 @@ class Game:
             inquirer.List(
               "target",
               message="Who's your target?",
-              choices=[character for character in characters],
+              choices=[character for character in self.characters],
             ),
           ]
           answers_2 = inquirer.prompt(pick_target)
           term = answers_2["target"]
-          characters_static[Game.index].standard_attack(characters[characters.index(term)])
+          self.characters_static[Game.index].standard_attack(self.characters[self.characters.index(term)])
           
-          for i in range(len(characters)):
-            characters[i].health_bar.draw()
+          for i in range(len(self.characters)):
+            self.characters[i].health_bar.draw()
             
-          if characters[characters.index(term)].health == 0:
-            if isinstance(characters[characters.index(term)], EnemyCharacter):
-              dead_enemies_checker.remove(term)
+          if self.characters[self.characters.index(term)].health == 0:
+            if isinstance(self.characters[self.characters.index(term)], EnemyCharacter):
+              self.dead_enemies_checker.remove(term)
             else:
-              dead_heroes_checker.remove(term)
-            characters.remove(term)
-            print(dead_enemies_checker)
-            print(characters)
+              self.dead_heroes_checker.remove(term)
+            self.characters.remove(term)
+            print(self.dead_enemies_checker)
+            print(self.characters)
           Game.action_counter -= 2
-          Game.check_index()
+          Game.check_index(self)
           input()
           
         case "nothing - skip turn":
-          print(f"{characters_static[Game.index]} did nothing and skipped it's turn")
-          for i in range(len(characters)):
-            characters[i].health_bar.draw()
+          print(f"{self.characters_static[Game.index]} did nothing and skipped it's turn")
+          for i in range(len(self.characters)):
+            self.characters[i].health_bar.draw()
           Game.action_counter = 0
-          Game.check_index()
+          Game.check_index(self)
           input()
 
-      self.running = len(dead_heroes_checker) > 0
-      if dead_enemies_checker:
+      self.running = len(self.dead_heroes_checker) > 0
+      if self.dead_enemies_checker:
         print('')
       else:
         input("YOU WIN")
@@ -187,6 +189,8 @@ class Game:
               ]
               answers = inquirer.prompt(questions)
               print(answers)
+              heroes = answers["Heroes"]
+              print(heroes)
               game.menu()
 
             case "Enemies":
@@ -199,6 +203,8 @@ class Game:
               ]
               answers = inquirer.prompt(questions)
               print(answers)
+              enemy_party = answers["Enemies"]
+              print(enemy_party)
               game.menu()
 
 
