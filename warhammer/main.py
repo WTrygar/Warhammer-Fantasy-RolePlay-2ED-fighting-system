@@ -136,7 +136,7 @@ class Game:
     exit()
 
   def menu(self):
-    Game.clear()
+    # Game.clear()
     while self.running:
       
 
@@ -166,7 +166,40 @@ class Game:
           game.menu()
 
         case "Update Teams - Not yet available":
-          game.menu()
+          options = [
+            inquirer.List(
+              "option",
+              message="Which team would You like to rearrange?",
+              choices=["Heroes", "Enemies"],
+            ),
+          ]
+          answers = inquirer.prompt(options)
+          term = answers['option']
+
+          match term:
+            case "Heroes":
+              questions = [
+                inquirer.Checkbox(
+                  "Heroes",
+                  message="Arrange party of heroes",
+                  choices=[hero for hero in playable_characters],
+                ),
+              ]
+              answers = inquirer.prompt(questions)
+              print(answers)
+              game.menu()
+
+            case "Enemies":
+              questions = [
+                inquirer.Checkbox(
+                  "Enemies",
+                  message="Arrange party of enemies",
+                  choices=[enemy for enemy in enemies],
+                ),
+              ]
+              answers = inquirer.prompt(questions)
+              print(answers)
+              game.menu()
 
 
 # game loop
