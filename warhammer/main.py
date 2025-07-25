@@ -144,7 +144,7 @@ class Game:
         inquirer.List(
           "option",
           message="Warhammer Fantasy Roleplay 2nd edition Battle Tracker",
-          choices=["Battle", "Create Player Character - Not yet available", "Create Enemy Character - Not yet available", "Update Character - Not yet available", "Update Teams"],
+          choices=["Battle", "Create Character - Not yet available", "Update Character - Not yet available", "Update Teams"],
         ),
       ]
       answers = inquirer.prompt(options)
@@ -154,13 +154,23 @@ class Game:
         case "Battle":
           game.run()
 
-        case "Create Player Character - Not yet available":
-          name = input("What's the name of the character: ")
-          character = PlayerCharacter.create_playable_character(name)
-
-        case "Create Enemy Character - Not yet available":
-          name = input("What's the name of the character: ")
-          character = EnemyCharacter.create_enemy_character(name)
+        case "Create Character - Not yet available":
+          options = [
+            inquirer.List(
+              "option",
+              message="Do You want to create Hero or Enemy?",
+              choices=["Hero", "Enemy"],
+            ),
+          ]
+          answers = inquirer.prompt(options)
+          term = answers['option']
+          match term:
+            case "Hero":
+              name = input("What's the name of the character: ")
+              character = PlayerCharacter.create_playable_character(name)
+            case "Enemy":
+              name = input("What's the name of the character: ")
+              character = EnemyCharacter.create_enemy_character(name)
 
         case "Update Character - Not yet available":
           game.menu()
