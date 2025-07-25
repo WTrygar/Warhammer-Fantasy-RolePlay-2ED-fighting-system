@@ -18,6 +18,7 @@ class Game:
   - index - int that keeps track which character's turn is it. Increments after the end of characters turn. Resets back to zero when reached the end of the characters queue.
   - action_counter - int that keeps track how many "actions" can character make in it's turn. Resets back to default value after the end of character's turn.
   """
+
   index = 0
   action_counter = 4
 
@@ -138,15 +139,12 @@ class Game:
     exit()
 
   def menu(self):
-    # Game.clear()
     while self.running:
-      
-
       options = [
         inquirer.List(
           "option",
           message="Warhammer Fantasy Roleplay 2nd edition Battle Tracker",
-          choices=["Battle", "Create Player Character - Not yet available", "Create Enemy Character - Not yet available", "Update Character - Not yet available", "Update Teams - Not yet available"],
+          choices=["Battle", "Create Player Character - Not yet available", "Create Enemy Character - Not yet available", "Update Character - Not yet available", "Update Teams"],
         ),
       ]
       answers = inquirer.prompt(options)
@@ -167,7 +165,7 @@ class Game:
         case "Update Character - Not yet available":
           game.menu()
 
-        case "Update Teams - Not yet available":
+        case "Update Teams":
           options = [
             inquirer.List(
               "option",
@@ -189,8 +187,11 @@ class Game:
               ]
               answers = inquirer.prompt(questions)
               print(answers)
-              heroes = answers["Heroes"]
-              print(heroes)
+              self.heroes = answers["Heroes"]
+              self.dead_heroes_checker = answers["Heroes"]
+              self.characters = [*self.heroes, *self.dead_enemies_checker]
+              self.characters_static = [*self.heroes, *self.dead_enemies_checker]
+              # print(heroes)
               game.menu()
 
             case "Enemies":
@@ -203,8 +204,9 @@ class Game:
               ]
               answers = inquirer.prompt(questions)
               print(answers)
-              enemy_party = answers["Enemies"]
-              print(enemy_party)
+              self.dead_enemies_checker = answers["Enemies"]
+              self.characters = [*self.heroes, *self.dead_enemies_checker]
+              self.characters_static = [*self.heroes, *self.dead_enemies_checker]
               game.menu()
 
 
