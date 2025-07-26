@@ -160,6 +160,7 @@ class Character(ABC):
     if self.roll_event_100(self.weapon_skills):
       print(f"{self.name}'s weapon skills: {self.weapon_skills}")
       print(f"{self.name} missed the attack!")
+      print('')
       return
     
     dmg = max(self.main_hand.damage + self.strength_bonus, 1)
@@ -204,6 +205,8 @@ class Character(ABC):
     print(f"{attacker.name} dealt {dmg} damage to {self.name} with {attacker.main_hand.name}")
     if not self.alive:
       print(f"{self.name} has fallen in battle...")
+    else:
+      print('')
 
 # ----- First Child Class -----
 class PlayerCharacter(Character):

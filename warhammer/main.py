@@ -74,12 +74,17 @@ class Game:
 
   def run(self):
     """function that handles the choice of chararcter actions and the targets of these actions if needed"""
+    print('')
+    print('')
+    print('')
+    print('')
+    print('')
     for i in range(len(self.characters)):
       self.characters[i].health_bar.draw()
     input()
 
     while self.running:
-      Game.clear()
+      # Game.clear()
       print(f"----- {Game.index + 1}. {self.characters_static[Game.index]}'s turn -----")
       print(f" Remaining actions: {Game.action_counter}")
 
@@ -95,6 +100,15 @@ class Game:
 
       match term:
         case "standard attack - 2":
+          game.clear()
+          print('')
+          print('')
+          print('')
+          print('')
+          print('')
+          for i in range(len(self.characters)):
+            self.characters[i].health_bar.draw()
+          print('')
           pick_target = [
             inquirer.List(
               "target",
@@ -104,6 +118,8 @@ class Game:
           ]
           answers_2 = inquirer.prompt(pick_target)
           term = answers_2["target"]
+          game.clear()
+          print('')
           self.characters_static[Game.index].standard_attack(self.characters[self.characters.index(term)])
           
           for i in range(len(self.characters)):
@@ -115,19 +131,26 @@ class Game:
             else:
               self.dead_heroes_checker.remove(term)
             self.characters.remove(term)
-            print(self.dead_enemies_checker)
-            print(self.characters)
+            # print(self.dead_enemies_checker)
+            # print(self.characters)
           Game.action_counter -= 2
           Game.check_index(self)
-          input()
+          print('')
+          input("Press any key to proceed")
           
         case "nothing - skip turn":
+          game.clear()
           print(f"{self.characters_static[Game.index]} did nothing and skipped it's turn")
+          print('')
+          print('')
+          print('')
+          print('')
           for i in range(len(self.characters)):
             self.characters[i].health_bar.draw()
           Game.action_counter = 0
           Game.check_index(self)
-          input()
+          print('')
+          input("Press any key to proceed")
 
       self.running = len(self.dead_heroes_checker) > 0
       if self.dead_enemies_checker:
@@ -152,6 +175,7 @@ class Game:
 
       match term:
         case "Battle":
+          game.clear()
           game.run()
 
         case "Create Character - Not yet available":
@@ -223,4 +247,5 @@ class Game:
 # game loop
 if __name__ == "__main__":
   game = Game()
+  game.clear()
   game.menu()
