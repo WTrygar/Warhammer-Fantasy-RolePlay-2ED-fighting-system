@@ -146,7 +146,11 @@ class Character(ABC):
     ... #the character rushes up to an opponent and delivers a single attack. The opponent must be at least 2 squares away from the character but within the character's charge move. Last 2 squares of the charge must be in a straight lin, so the charger can build up speed and line up with the target. The charging character gains a 10+ weapon_skill bonus.
 
   def switch_weapon(self) -> None:
-    ... #character can switch a weapon for the other in his weapon list. If not stated, it takes half an action -> time of action == 1
+    #character can switch a weapon for the other in his weapon list. If not stated, it takes half an action -> time of action == 1
+    weapons = [inquirer.List("weapon", message="Choose a weapon You want to switch to:", choices=[weapon for weapon in self.weapons],),]
+    answers = inquirer.prompt(weapons)
+    self.main_hand = answers["weapon"]
+
 
   def use_item(self) -> None:
     ... #character uses an item from it's inventory, takes atleast half an action -> time of action >= 1

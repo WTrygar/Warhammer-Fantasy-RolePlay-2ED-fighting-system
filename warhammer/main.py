@@ -92,7 +92,7 @@ class Game:
         inquirer.List(
           "action",
           message="What do You want to do?",
-          choices=["standard attack - 2", "nothing - skip turn"],
+          choices=["standard attack - 2", "switch weapon - 1", "nothing - skip turn"],
         ),
       ]
       answers = inquirer.prompt(actions)
@@ -137,6 +137,25 @@ class Game:
           Game.check_index(self)
           print('')
           input("Press any key to proceed")
+        
+        case "switch weapon - 1":
+          game.clear()
+          if len(self.characters_static[Game.index].weapons) < 2:
+            print(f"{self.characters_static[Game.index]} doesn't have any weapon to switch")
+          else:  
+            self.characters_static[Game.index].switch_weapon()
+            print(f"{self.characters_static[Game.index]} switched weapon to {self.characters_static[Game.index].main_hand}")
+            print('')
+            print('')
+            print('')
+            print('')
+            for i in range(len(self.characters)):
+              self.characters[i].health_bar.draw()
+            Game.action_counter -= 1
+            
+            Game.check_index(self)
+            print('')
+            input("Press any key to proceed")
           
         case "nothing - skip turn":
           game.clear()

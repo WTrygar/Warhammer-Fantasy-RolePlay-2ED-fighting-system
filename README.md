@@ -19,6 +19,7 @@ Characters can either attack anyone, or do nothing (more actions will be added i
 Each character has 4 action points while each action costs are different:
 
 - attack: 2 points,
+- switch weapons: 1 point, or if character have less than 2 weapons 0 points
 - do nothing: all points remaining (skip to the next character).
 
 ### Rearrange Teams
@@ -36,6 +37,7 @@ Features that will be added in the future:
 - more actions -> create functions in Character class,
 - characters that value of attribute "attacks" is atleast 2, should be able to perform multiple attacks. If "attacks" is set to 1, it should be forbidden.
 - create more characters and weapons.
+- add character status effects like stunned, bleeding
 
 ## Project setup
 
