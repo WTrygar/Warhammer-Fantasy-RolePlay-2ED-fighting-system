@@ -1,4 +1,5 @@
 #here will be a list of spells (functions or objects) that characters with Magic > 0 could use
+from items import match
 from abc import ABC
 
 
@@ -21,5 +22,5 @@ fires_of_uzhul: DamagingSpell = DamagingSpell(name = "Fires of U'Zhul",
                               casting_number = 6,
                               ingridient = match,
                               damage = 6,
-                              multi_target = False
+                              multi_target = False,
                               description = "You can throw a bolt of fire at an opponent within 36 yards (18 squares) of You. this is a magic missile with Damage 4.")
