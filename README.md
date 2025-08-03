@@ -3,6 +3,8 @@
 WFRP 2ED has a lot of data to follow for game masters, especially during combat.
 That's why I'm making an app that keeps track of the battle for the game master.
 
+<img width="671" height="612" alt="image" src="https://github.com/user-attachments/assets/8edb7fa6-88d1-4344-b6cb-e492a04c9dd2" />
+
 ## What can it do?
 
 Once the user runs the code, menu shows up:
